@@ -1,12 +1,39 @@
 import React from 'react';
-import {makeStyles} from '@material-ui/styles';
+import { makeStyles } from '@material-ui/styles';
+import SignIn from './auth/SignIn';
 
-const useStyles = makeStyles({});
+const useStyles = makeStyles({
+    title: {
+        marginLeft: '300px',
+        marginTop: '200px',
+        fontFamily: 'Montserrat',
+        fontStyle: 'normal',
+        fontSize: '88px',
+        fontWeight: 'bold'
+    },
+    coment: {
+        marginLeft: '300px',
+        marginTop: '45px',
+        fontFamily: 'Montserrat',
+        fontStyle: 'normal',
+        fontSize: '30px',
+        fontWeight: 'bold',
+
+    },
+});
 const Welcome = (props) => {
     const classes = useStyles();
     return (
-        <div className={classes.root}>
-            <h1>Welcome</h1>
+        <div>
+            <div className={classes.title}>
+                PickMe
+            </div>
+            <div className={classes.coment}>
+                회사에게 필요한 인재, <br />
+                PickMe에서 찾아보세요!
+            </div>
+            <SignIn title = '회사입니까?'/>
+            <SignIn title = '구직자입니까?'/>
         </div>
     );
 };
