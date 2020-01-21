@@ -17,18 +17,13 @@ import AppBar, {AppBarItem} from "./components/AppBar";
 import Jobs from "./pages/jobs/Jobs";
 import Company from "./pages/company/Company";
 import Welcome from "./pages/Welcome";
-import UserInfo from "./components/UserInfo";
 import Profile from "./pages/auth/Profile";
 
 const App = () => {
     return (
         <div className="App">
             <Root>
-                <UserInfo/>
                 <AppBar>
-                    <AppBarItem title={'Welcome'} to={`${PATH_WELCOME}`}/>
-                    <AppBarItem title={'SignIn'} to={`${PATH_SIGNIN}`}/>
-                    <AppBarItem title={'SignUp'} to={`${PATH_SIGNUP}`}/>
                     <AppBarItem title={'Main'} to={`${PATH_MAIN}`}/>
                     <AppBarItem title={'Jobs'} to={`${PATH_JOBS}`}/>
                     <AppBarItem title={'Company'} to={`${PATH_COMPANY}`}/>
