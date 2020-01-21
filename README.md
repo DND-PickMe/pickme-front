@@ -1,68 +1,36 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Pickme Front
+Reverse Head Platform Dev Repository
 
-## Available Scripts
+## Git Convention
 
-In the project directory, you can run:
+### Git WorkFlow
+* 개발과 관련된 모든 이야기는 [Issues](https://github.com/DND-PickMe/pickme-back/issues)에서 진행합니다.
 
-### `yarn start`
+    * 급한 용무는 우선 순위에 따라서 카카오톡 또는 슬랙과 같은 메신저를 이용합니다.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+* API 및 모델링 명세를 주기적으로 최신화하면서 `README.md`를 잘 관리합니다.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+* **Fork**를 통한 PR을 지향합니다.
 
-### `yarn test`
+* 아래와 같은 Git Workflow를 지향하며 지키려고 노력합니다. ([참고](https://nvie.com/posts/a-successful-git-branching-model/?))
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+    <img width=750, height=850, src="https://camo.githubusercontent.com/7f2539ff6001fe7700853313e7cdb7fd4602e16a/68747470733a2f2f6e7669652e636f6d2f696d672f6769742d6d6f64656c4032782e706e67">
 
-### `yarn build`
+### Commit Message
+- 커밋 메시지의 시작에 [Label]을 붙입니다. [Label]은 github의 Label과 동일합니다.
+- 첫 글자는 대문자를 사용합니다.
+- example
+  - Fix 버그 수정 #{issue number}
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+<details> 
+<summary>라벨 설명</summary>
+<ul>
+  <li> Fix : 버그를 고쳤을 때 </li>
+  <li> Convention : 코드 포맷팅 </li>
+  <li> Docs : README 등의 문서화 </li>
+  <li> Refactoring : 코드 리팩토링 </li>
+  <li> Add : 기능 추가 </li>
+  <li> Question : 질문 </li>
+  <li> Test : 테스트 코드 추가 </li>
+</ul>
+</details>
