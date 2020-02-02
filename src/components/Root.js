@@ -1,19 +1,19 @@
 import React from 'react';
 import {makeStyles} from '@material-ui/styles';
 
-const usestyles = makeStyles({
-    container: {
+const useStyles = makeStyles({
+    root: {
         margin: 10,
     },
 });
 
-const root = (props) => {
-    const classes = usestyles();
+const Root = (props) => {
+    const classes = useStyles();
     return (
-        <div className={classes.container}>
+        <div className={classes.root}>
             {props.children}
         </div>
     );
 };
 
-export default root;
+export default Root;

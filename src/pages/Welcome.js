@@ -5,13 +5,13 @@ import SignIn from './auth/SignIn';
 const useStyles = makeStyles({
     title: {
         marginLeft: '300px',
-        marginTop: '200px',
+        marginTop: 150,
         fontFamily: 'Montserrat',
         fontStyle: 'normal',
         fontSize: '88px',
         fontWeight: 'bold'
     },
-    coment: {
+    comment: {
         marginLeft: '300px',
         marginTop: '45px',
         fontFamily: 'Montserrat',
@@ -28,7 +28,7 @@ const Welcome = (props) => {
             <div className={classes.title}>
                 PickMe
             </div>
-            <div className={classes.coment}>
+            <div className={classes.comment}>
                 회사에게 필요한 인재, <br />
                 PickMe에서 찾아보세요!
             </div>

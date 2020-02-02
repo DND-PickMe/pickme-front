@@ -21,7 +21,7 @@ const useStyles = makeStyles({
         width: '660px',
         height: '600px'
     },
-    feild: {
+    field: {
         width: '550px',
     },
     title: {
@@ -30,7 +30,7 @@ const useStyles = makeStyles({
         fontWeight: 'bold',
         fontStyle: "normal",
         marginLeft: '230px',
-        mrginTop: '70px'
+        margin: '70px'
     },
     signIn: {
         width: '550px',
@@ -59,27 +59,27 @@ const SignIn = (props) => {
     const [open, setOpen] = useState(false);
     const openDialog = () => {
         setOpen(true);
-    }
+    };
     const closeDialog = () => {
         setOpen(false);
-    }
+    };
     return (
         <div>
             <button className={classes.button} onClick={openDialog}>{props.title}</button>
-            <Dialog open={open} aria-labelledby="form-dialog-title" >
+            <Dialog onClose={closeDialog} open={open} aria-labelledby="form-dialog-title" >
                 <div className={classes.title}>
                     <p> SignIn </p>
                 </div>
                 <DialogContent>
                     <TextField
-                        className={classes.feild}
+                        className={classes.field}
                         autoFocus
                         id="name"
                         label="Email Address"
                         type="email"
                     />
                     <TextField
-                        className={classes.feild}
+                        className={classes.field}
                         id="password"
                         label="Password"
                     />
