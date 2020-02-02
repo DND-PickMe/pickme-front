@@ -10,9 +10,10 @@ const Main = (props) => {
     return (
         <div>
             <h1>Main Page</h1>
-            <CardWrapper/>
-            <CardWrapper/>
-            <CardWrapper/>
+            <CardWrapper title={'가장 최근에 올라온 이력서'}/>
+            <CardWrapper title={'많은 제안을 받은 이력서'}/>
+            <CardWrapper title={'많은 찜을 당한 이력서'}/>
+            <CardWrapper title={'많은 좋아요를 받은 이력서'}/>
         </div>
     );
 };
