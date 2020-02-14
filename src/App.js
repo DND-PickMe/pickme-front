@@ -8,7 +8,7 @@ import {
     PATH_ENTERPRISE,
     PATH_WELCOME,
     PATH_USER_PROFILE
-} from "./constants/paths";
+} from "./route/paths";
 import SignIn from "./pages/auth/SignIn";
 import SignUp from "./pages/auth/SignUp";
 import Main from "./pages/main/Main";
