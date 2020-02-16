@@ -7,7 +7,8 @@ import {
   PATH_JOBS,
   PATH_ENTERPRISE,
   PATH_WELCOME,
-  PATH_USER_PROFILE, PATH_AUTH_CHECK
+  PATH_USER_PROFILE, PATH_AUTH_CHECK,
+  PATH_USER_RESUME
 } from "./route/paths";
 import SignIn from "./pages/auth/SignIn";
 import SignUp from "./pages/auth/SignUp";
@@ -18,6 +19,7 @@ import Explore from "./pages/explore/Explore";
 import Enterprise from "./pages/enterprise/Enterprise";
 import Welcome from "./pages/Welcome";
 import Profile from "./pages/auth/Profile";
+import Resume from './pages/resume/Resume';
 import { PrivateRoute } from "./route/PrivateRoute";
 import {AuthProvider} from "./context/AuthContext";
 import AuthCheck from "./pages/auth/AuthCheck";
@@ -47,6 +49,7 @@ const App = props => {
             <Route path={PATH_ENTERPRISE} component={Enterprise} />
 
             <PrivateRoute path={PATH_USER_PROFILE} component={Profile} />
+            <Route path={PATH_USER_RESUME} component={Resume} />
 
             <Route path={PATH_WELCOME} component={Welcome} />
           </Switch>

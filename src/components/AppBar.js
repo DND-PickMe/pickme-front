@@ -3,11 +3,11 @@ import { makeStyles } from "@material-ui/styles";
 import AccountCircleRoundedIcon from "@material-ui/icons/AccountCircleRounded";
 import NotificationsRoundedIcon from "@material-ui/icons/NotificationsRounded";
 import MenuIcon from "@material-ui/icons/Menu";
-import {PATH_AUTH_CHECK, PATH_SIGN_IN, PATH_SIGN_UP, PATH_USER_PROFILE, PATH_WELCOME} from "../route/paths";
+import { PATH_AUTH_CHECK, PATH_SIGN_IN, PATH_SIGN_UP, PATH_USER_PROFILE, PATH_USER_RESUME, PATH_WELCOME } from "../route/paths";
 import { Link } from "react-router-dom";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import {AuthConsumer} from "../context/AuthContext";
+import { AuthConsumer } from "../context/AuthContext";
 
 const AppBar = props => {
   const classes = useStyles();
@@ -63,7 +63,12 @@ const AppBar = props => {
                     >
                       <MenuItem onClick={closeMenu}>Profile</MenuItem>
                     </Link>
-                    <MenuItem onClick={closeMenu}>My Resume</MenuItem>
+                    <Link
+                      to={PATH_USER_RESUME}
+                      style={{ textDecoration: "none", color: "inherit" }}
+                    >
+                      <MenuItem onClick={closeMenu}>My Resume</MenuItem>
+                    </Link>
                     <MenuItem
                       onClick={() => {
                         localStorage.removeItem("token");
@@ -77,7 +82,7 @@ const AppBar = props => {
                 </div>
 
                 : <div>
-                  <Link className={classes.appBarItem} style={{marginRight: 20}} to={PATH_SIGN_IN}>signIn</Link>
+                  <Link className={classes.appBarItem} style={{ marginRight: 20 }} to={PATH_SIGN_IN}>signIn</Link>
                   <Link className={classes.appBarItem} to={PATH_SIGN_UP}>signUp</Link>
                 </div>
             )
