@@ -1,6 +1,7 @@
 export const PATH_WELCOME = '/';
-export const PATH_SIGNIN = '/sign-in';
-export const PATH_SIGNUP = '/sign-up';
+export const PATH_SIGN_IN = '/sign-in';
+export const PATH_SIGN_UP = '/sign-up';
+export const PATH_AUTH_CHECK = '/auth-check';
 
 export const PATH_MAIN = '/main';
 export const PATH_JOBS = '/explore';
