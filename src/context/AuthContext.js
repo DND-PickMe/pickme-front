@@ -1,26 +1,30 @@
 import React, { createContext, useState } from "react";
-import { BASE_URL } from "../api_manager/urls";
 import { api } from "../api";
 
 const AuthContext = createContext();
 const { Provider, Consumer: AuthConsumer } = AuthContext;
 
 const AuthProvider = props => {
-  const [userName, _setUserName] = useState("");
+  const [user, _setUser] = useState({});
   const [userAuthorized, _setUserAuthorized] = useState(false);
 
   const checkUserAuth = async () => {
-    let res = api.get(`${BASE_URL}`);
-    if (!res.ok) {
+    try {
+      const res = await  api.get(`/accounts`);
+      console.log(res);
+      if(res.status === 200) {
+        _setUserAuthorized(true);
+        _setUser(res.data);
+        return true;
+      }
+    } catch (err) {
       _setUserAuthorized(false);
+      console.log(err);
       return false;
     }
-    _setUserName(res.data.nickname);
-    _setUserAuthorized(true);
-    return true;
   };
 
-  const state = { userName, userAuthorized };
+  const state = { user, userAuthorized };
   const actions = { checkUserAuth };
 
   return <Provider value={{ state, actions }}>{props.children}</Provider>;
