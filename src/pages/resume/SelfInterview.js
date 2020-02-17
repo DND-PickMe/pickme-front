@@ -20,7 +20,7 @@ const SelfInterview = () => {
 	const classes = useStyles();
 
 	return (
-		<div classNaem={classes.root}>
+		<div className={classes.root}>
 			<h2>Self Interview</h2>
 			<TextField className={classes.interviewTitle} id="interview-title" fullWidth label="Title" variant="outlined" />
 			<TextField className={classes.interviewContent} id="interview-content" fullWidth multiline rows="10" label="Content" variant="outlined" />

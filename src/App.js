@@ -13,7 +13,6 @@ import {
 import SignIn from "./pages/auth/SignIn";
 import SignUp from "./pages/auth/SignUp";
 import Main from "./pages/main/Main";
-import Root from "./components/Root";
 import AppBar, { AppBarItem } from "./components/AppBar";
 import Explore from "./pages/explore/Explore";
 import Enterprise from "./pages/enterprise/Enterprise";
@@ -26,34 +25,32 @@ import AuthCheck from "./pages/auth/AuthCheck";
 
 const App = props => {
   return (
-    <div className="App">
+    <div style={{margin: 0}}>
       <AuthProvider>
         {console.log(props)}
-        <Root>
-          <AppBar {...props}>
-            <AppBarItem title={"Main"} to={`${PATH_MAIN}`} />
-            <AppBarItem title={"Explore"} to={`${PATH_JOBS}`} />
-            <AppBarItem title={"Enterprise"} to={`${PATH_ENTERPRISE}`} />
-          </AppBar>
+        <AppBar {...props}>
+          <AppBarItem title={"Main"} to={`${PATH_MAIN}`} />
+          <AppBarItem title={"Explore"} to={`${PATH_JOBS}`} />
+          <AppBarItem title={"Enterprise"} to={`${PATH_ENTERPRISE}`} />
+        </AppBar>
 
-          <div style={{ marginTop: 70 }} />
+        <div style={{ marginTop: 70 }} />
 
-          <Switch>
-            <Route path={PATH_AUTH_CHECK} component={AuthCheck} />
-            <Route path={PATH_SIGN_IN} component={SignIn} />
-            <Route path={PATH_SIGN_IN} component={SignIn} />
-            <Route path={PATH_SIGN_UP} component={SignUp} />
+        <Switch>
+          <Route path={PATH_AUTH_CHECK} component={AuthCheck} />
+          <Route path={PATH_SIGN_IN} component={SignIn} />
+          <Route path={PATH_SIGN_IN} component={SignIn} />
+          <Route path={PATH_SIGN_UP} component={SignUp} />
 
-            <Route path={PATH_MAIN} component={Main} />
-            <Route path={PATH_JOBS} component={Explore} />
-            <Route path={PATH_ENTERPRISE} component={Enterprise} />
+          <Route path={PATH_MAIN} component={Main} />
+          <Route path={PATH_JOBS} component={Explore} />
+          <Route path={PATH_ENTERPRISE} component={Enterprise} />
 
-            <PrivateRoute path={PATH_USER_PROFILE} component={Profile} />
-            <Route path={PATH_USER_RESUME} component={Resume} />
+          <PrivateRoute path={PATH_USER_PROFILE} component={Profile} />
+          <Route path={PATH_USER_RESUME} component={Resume} />
 
-            <Route path={PATH_WELCOME} component={Welcome} />
-          </Switch>
-        </Root>
+          <Route path={PATH_WELCOME} component={Welcome} />
+        </Switch>
       </AuthProvider>
     </div>
   );

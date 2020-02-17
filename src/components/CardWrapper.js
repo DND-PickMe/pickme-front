@@ -36,11 +36,11 @@ const CardWrapper = props => {
       <h3>{props.title}</h3>
       <div className={classes.cardWrapper}>
         {cards &&
-          cards.map((card, index) =>
-            cards.length - 1 > index ? (
-              <Card card={card} />
+          cards.map((card, idx) =>
+            cards.length - 1 > idx ? (
+              <Card key={idx} card={card} />
             ) : (
-              <Card card={card} style={{ marginRight: 0 }} />
+              <Card key={idx} card={card} style={{ marginRight: 0 }} />
             )
           )}
       </div>

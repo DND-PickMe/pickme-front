@@ -31,8 +31,8 @@ const Explore = props => {
               {select.label}
             </InputLabel>
             <Select labelId="demo-simple-select-label" id="demo-simple-select">
-              {select.items.map(item => (
-                <MenuItem value={30}>{item}</MenuItem>
+              {select.items.map((item, idx) => (
+                <MenuItem key={idx} value={30}>{item}</MenuItem>
               ))}
             </Select>
           </FormControl>
