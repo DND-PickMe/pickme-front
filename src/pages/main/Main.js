@@ -1,22 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/styles";
 import CardWrapper from "../../components/CardWrapper";
-import Axios from "axios";
-import { BASE_URL } from "../../api/urls";
 
 const useStyles = makeStyles({});
 
 const Main = props => {
   const classes = useStyles();
-  const [resume, setResume] = useState(null);
-
-  useEffect(() => {
-    Axios.get(`${BASE_URL}/accounts`, {
-      headers: {
-        Authorization: "Bearer " + localStorage.token
-      }
-    });
-  });
 
   return (
     <div>
