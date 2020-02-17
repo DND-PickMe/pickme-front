@@ -4,7 +4,6 @@ import TextField from '@material-ui/core/TextField/TextField';
 
 const useStyles = makeStyles({
 	root: {
-
 	},
 	experienceName: {
 
@@ -21,12 +20,12 @@ const useStyles = makeStyles({
 	experienceDescription: {
 
 	}
-})
+});
 
 const Experience = () => {
 	const classes = useStyles();
 	return (
-		<div classNaem={classes.root}>
+		<div className={classes.root}>
 			<h2>Experience</h2>
 			<TextField className={classes.experienceName} id="experience-name" label="회사명" variant="outlined" />
 			<TextField className={classes.experiencePosition} id="experience-position" label="역할" variant="outlined" />

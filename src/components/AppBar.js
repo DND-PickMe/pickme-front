@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useContext, useEffect, useState} from "react";
 import { makeStyles } from "@material-ui/styles";
 import AccountCircleRoundedIcon from "@material-ui/icons/AccountCircleRounded";
 import NotificationsRoundedIcon from "@material-ui/icons/NotificationsRounded";
@@ -7,11 +7,16 @@ import { PATH_AUTH_CHECK, PATH_SIGN_IN, PATH_SIGN_UP, PATH_USER_PROFILE, PATH_US
 import { Link } from "react-router-dom";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import { AuthConsumer } from "../context/AuthContext";
+import {AuthConsumer, AuthContext} from "../context/AuthContext";
 
 const AppBar = props => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
+  const {checkUserAuth} = useContext(AuthContext).actions;
+
+  useEffect(()=> {
+    checkUserAuth();
+  },[]);
 
   const openMenu = event => {
     setAnchorEl(event.currentTarget);
@@ -106,11 +111,13 @@ export const AppBarItem = props => {
 
 const useStyles = makeStyles({
   root: {
-    marginTop: 10,
+    padding: "10px 0px",
     width: "100%",
     position: "fixed",
     display: "flex",
-    top: 0
+    top: 0,
+    backgroundColor: "white",
+    zIndex: 1,
   },
   title: {
     fontWeight: "bold",

@@ -69,9 +69,9 @@ const SignIn = props => {
           or <br />
           <Link to="/sign-up"> SignUp </Link>
         </div>
-        {messages && messages.map(message => (
-          <p style={{textAlign: 'center', color: 'red', fontWeight: 'bold'}}>{`${message.field}: ${message.defaultMessage}`}</p>
-        ))}
+        {/*{messages && messages.map(message => (*/}
+        {/*  <p style={{textAlign: 'center', color: 'red', fontWeight: 'bold'}}>{`${message.field}: ${message.defaultMessage}`}</p>*/}
+        {/*))}*/}
       </Dialog>
   );
 };
