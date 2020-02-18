@@ -5,6 +5,8 @@ export const api = axios.create({
   baseURL: BASE_URL,
 });
 
+api.defaults.headers.post['Content-Type'] = 'application/json';
+
 api.interceptors.request.use(
   config => {
   let token = localStorage.getItem('token');
