@@ -26,7 +26,7 @@ const SignUp = () => {
       console.log(values);
       try {
         const res = await api.post('accounts',values);
-        if(res.status===200) {
+        if(res.status===201) {
           alert("Success");
         }
       } catch (err) {

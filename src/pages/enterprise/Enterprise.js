@@ -12,4 +12,3 @@ const Enterprise = props => {
 };
 
 export default Enterprise;
-

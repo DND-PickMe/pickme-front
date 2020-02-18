@@ -1,19 +1,10 @@
 import React from "react";
 import { Route, Switch, withRouter } from "react-router-dom";
-import {
-  PATH_SIGN_IN,
-  PATH_SIGN_UP,
-  PATH_MAIN,
-  PATH_JOBS,
-  PATH_ENTERPRISE,
-  PATH_WELCOME,
-  PATH_USER_PROFILE, PATH_AUTH_CHECK,
-  PATH_USER_RESUME
-} from "./route/paths";
+import { PATH_SIGN_IN, PATH_SIGN_UP, PATH_MAIN, PATH_JOBS, PATH_ENTERPRISE, PATH_WELCOME, PATH_USER_PROFILE, PATH_AUTH_CHECK, PATH_USER_RESUME } from "./route/paths";
 import SignIn from "./pages/auth/SignIn";
 import SignUp from "./pages/auth/SignUp";
 import Main from "./pages/main/Main";
-import AppBar, { AppBarItem } from "./components/AppBar";
+// import {AppBar, Toolbar, Typography} from "@material-ui/core"
 import Explore from "./pages/explore/Explore";
 import Enterprise from "./pages/enterprise/Enterprise";
 import Welcome from "./pages/Welcome";
@@ -22,16 +13,23 @@ import Resume from './pages/resume/Resume';
 import { PrivateRoute } from "./route/PrivateRoute";
 import {AuthProvider} from "./context/AuthContext";
 import AuthCheck from "./pages/auth/AuthCheck";
+import AppBar, {AppBarItem} from "./components/AppBar";
 
 const App = props => {
   return (
     <div style={{margin: 0}}>
       <AuthProvider>
         {console.log(props)}
+        {/* <AppBar>
+          <Toolbar>
+            <Typography variant="h1" color="inherit" >Pickme</Typography>
+          </Toolbar>
+        </AppBar> */}
+
         <AppBar {...props}>
-          <AppBarItem title={"Main"} to={`${PATH_MAIN}`} />
-          <AppBarItem title={"Explore"} to={`${PATH_JOBS}`} />
-          <AppBarItem title={"Enterprise"} to={`${PATH_ENTERPRISE}`} />
+         <AppBarItem title={"Main"} to={`${PATH_MAIN}`} />
+         <AppBarItem title={"Explore"} to={`${PATH_JOBS}`} />
+         <AppBarItem title={"Enterprise"} to={`${PATH_ENTERPRISE}`} />
         </AppBar>
 
         <div style={{ marginTop: 70 }} />
