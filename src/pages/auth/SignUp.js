@@ -1,6 +1,6 @@
 import React from "react";
 import TextField from "@material-ui/core/TextField/TextField";
-import { Button, makeStyles, Paper } from "@material-ui/core";
+import { Button, makeStyles, Paper, Grid } from "@material-ui/core";
 import {useFormik} from "formik";
 import * as yup from "yup";
 import PasswordInput from "../../components/PasswordInput";
@@ -37,7 +37,7 @@ const SignUp = () => {
   const { values, handleChange, errors, setFieldTouched, touched, isValid, isSubmitting, handleSubmit, setFieldValue, resetForm, setErrors, submitForm } = formik;
 
   return (
-    <div style={{ width: "40%", margin: "0 auto" }}>
+    <Grid>
       <Paper elevation={3} style={{ padding: 30 }}>
         <h2>회원가입</h2>
         <TextField onChange={handleChange("email")} fullWidth label="E-mail" variant="outlined" />
@@ -52,7 +52,8 @@ const SignUp = () => {
         <div style={{ marginBottom: 20 }} />
         <Button onClick={submitForm}>Summit</Button>
       </Paper>
-    </div>
+    </Grid>
+
   );
 };
 
