@@ -1,22 +1,36 @@
-import React, {useContext, useEffect, useState} from "react";
-import { makeStyles } from "@material-ui/styles";
-import AccountCircleRoundedIcon from "@material-ui/icons/AccountCircleRounded";
-import NotificationsRoundedIcon from "@material-ui/icons/NotificationsRounded";
-import MenuIcon from "@material-ui/icons/Menu";
-import { PATH_AUTH_CHECK, PATH_SIGN_IN, PATH_SIGN_UP, PATH_USER_PROFILE, PATH_USER_RESUME, PATH_WELCOME } from "../route/paths";
+import { AppBar, Toolbar, Typography, IconButton, Button } from "@material-ui/core"
+import { makeStyles } from "@material-ui/core/styles";
+import React, { useContext, useState, useEffect } from "react";
+import { PATH_AUTH_CHECK, PATH_SIGN_IN, PATH_SIGN_UP, PATH_USER_PROFILE, PATH_USER_RESUME, PATH_WELCOME, PATH_MAIN, PATH_EXPLORE, PATH_ENTERPRISE } from "../route/paths";
 import { Link } from "react-router-dom";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import {AuthConsumer, AuthContext} from "../context/AuthContext";
+import { AuthConsumer, AuthContext } from "../context/AuthContext";
 
-const AppBar = props => {
+import AccountCircleRoundedIcon from "@material-ui/icons/AccountCircleRounded";
+import MenuIcon from "@material-ui/icons/Menu"
+
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    flexGrow: 1,
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  title: {
+    flexGrow: 1,
+  }
+}));
+
+export default props => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
-  const {checkUserAuth} = useContext(AuthContext).actions;
+  const { checkUserAuth } = useContext(AuthContext).actions;
 
-  useEffect(()=> {
+  useEffect(() => {
     checkUserAuth();
-  },[]);
+  }, [])
 
   const openMenu = event => {
     setAnchorEl(event.currentTarget);
@@ -27,109 +41,88 @@ const AppBar = props => {
   };
 
   return (
-    <header className={classes.root}>
-      <div style={{ flex: 0.6 }} />
-      <Link
-        to={PATH_WELCOME}
-        style={{ textDecoration: "none", color: "inherit" }}
-      >
-        <span className={classes.title}>Pickme</span>
-      </Link>
-      <div style={{ flex: 3 }} />
-      {props.children}
-      <div style={{ flex: 3 }} />
-
-      <AuthConsumer>
-        {
-          auth => {
-            console.log(auth);
-            return (
-              auth.state.userAuthorized
-                ?
-                <div>
-                  <NotificationsRoundedIcon fontSize={"large"} />
-                  <Link
-                    to={PATH_USER_PROFILE}
-                    style={{ textDecoration: "none", color: "inherit" }}
-                  >
-                    <AccountCircleRoundedIcon fontSize={"large"} />
-                  </Link>
-                  <MenuIcon fontSize={"large"} onClick={openMenu} />
-                  <Menu
-                    id="simple-menu"
-                    anchorEl={anchorEl}
-                    keepMounted
-                    open={Boolean(anchorEl)}
-                    onClose={closeMenu}
-                  >
-                    <Link
-                      to={PATH_USER_PROFILE}
-                      style={{ textDecoration: "none", color: "inherit" }}
-                    >
-                      <MenuItem onClick={closeMenu}>Profile</MenuItem>
-                    </Link>
-                    <Link
-                      to={PATH_USER_RESUME}
-                      style={{ textDecoration: "none", color: "inherit" }}
-                    >
-                      <MenuItem onClick={closeMenu}>My Resume</MenuItem>
-                    </Link>
-                    <MenuItem
-                      onClick={() => {
-                        localStorage.removeItem("token");
-                        props.history.replace(PATH_AUTH_CHECK);
-                        closeMenu();
-                      }}
-                    >
-                      Logout
-                    </MenuItem>
-                  </Menu>
-                </div>
-
-                : <div>
-                  <Link className={classes.appBarItem} style={{ marginRight: 20 }} to={PATH_SIGN_IN}>signIn</Link>
-                  <Link className={classes.appBarItem} to={PATH_SIGN_UP}>signUp</Link>
-                </div>
-            )
+    <AppBar position="static">
+      {console.log(props)}
+      <Toolbar>
+        <IconButton className={classes.menuButton} edge="start" color="inherit" aria-label="menu">
+          <MenuIcon></MenuIcon>
+        </IconButton>
+        <Typography
+          variant="h6"
+          color="inherit"
+          className={classes.title}
+          onClick={() =>
+            props.history.push(PATH_WELCOME)
           }
-        }
+        >Pickme</Typography>
 
-      </AuthConsumer>
-      <div style={{ flex: 0.5 }} />
-    </header>
-  );
-};
+        <Link style={{ textDecoration: "none", color: "inherit" }} to={PATH_MAIN}>
+          <Button color="inherit">Main</Button>
+        </Link>
+        <Link style={{ textDecoration: "none", color: "inherit" }} to={PATH_EXPLORE}>
+          <Button color="inherit">Explore</Button>
+        </Link>
+        <Link style={{ textDecoration: "none", color: "inherit" }} to={PATH_ENTERPRISE}>
+          <Button color="inherit">Enterprise</Button>
+        </Link>
 
-export const AppBarItem = props => {
-  const classes = useStyles(props);
-  return (
-    <Link className={classes.appBarItem} to={props.to}>
-      {props.title}
-    </Link>
-  );
-};
-
-const useStyles = makeStyles({
-  root: {
-    padding: "10px 0px",
-    width: "100%",
-    position: "fixed",
-    display: "flex",
-    top: 0,
-    backgroundColor: "white",
-    zIndex: 1,
-  },
-  title: {
-    fontWeight: "bold",
-    fontSize: 30
-  },
-  appBarItem: {
-    textAlign: "center",
-    textDecoration: "none",
-    color: "inherit",
-    flex: 1,
-    fontSize: 24,
-  }
-});
-
-export default AppBar;
+        <AuthConsumer>
+          {
+            auth => {
+              console.log(auth);
+              return (
+                auth.state.userAuthorized
+                  ?
+                  <>
+                    <AccountCircleRoundedIcon edge="end" fontSize={"large"}
+                      onClick={() =>
+                        props.history.push(PATH_USER_PROFILE)
+                      }
+                    />
+                    <MenuIcon edge="end" fontSize={"large"} onClick={openMenu} />
+                    <Menu
+                      id="simple-menu"
+                      anchorEl={anchorEl}
+                      keepMounted
+                      open={Boolean(anchorEl)}
+                      onClose={closeMenu}
+                    >
+                      <Link
+                        to={PATH_USER_PROFILE}
+                        style={{ textDecoration: "none", color: "inherit" }}
+                      >
+                        <MenuItem onClick={closeMenu}>Profile</MenuItem>
+                      </Link>
+                      <Link
+                        to={PATH_USER_RESUME}
+                        style={{ textDecoration: "none", color: "inherit" }}
+                      >
+                        <MenuItem onClick={closeMenu}>My Resume</MenuItem>
+                      </Link>
+                      <MenuItem
+                        onClick={() => {
+                          localStorage.removeItem("token");
+                          props.history.replace(PATH_AUTH_CHECK);
+                          closeMenu();
+                        }}
+                      >
+                        Logout
+                    </MenuItem>
+                    </Menu>
+                  </>
+                  :
+                  <>
+                    <Link style={{ textDecoration: "none", color: "inherit" }} to={PATH_SIGN_IN}>
+                      <Button color="inherit">SignIn</Button>
+                    </Link>
+                    <Link style={{ textDecoration: "none", color: "inherit" }} to={PATH_SIGN_UP}>
+                      <Button color="inherit">SignUp</Button>
+                    </Link>
+                  </>
+              )
+            }}
+        </AuthConsumer>
+      </Toolbar>
+    </AppBar >
+  )
+}
