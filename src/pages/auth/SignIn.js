@@ -49,7 +49,7 @@ const SignIn = props => {
         <TextField
           className={classes.field}
           autoFocus
-          label="Email Address"
+          label="Email"
           type="email"
           name="email"
           onChange={e => handleInputs(e)}

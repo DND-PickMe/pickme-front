@@ -1,4 +1,4 @@
-import { AppBar, Toolbar, Typography, IconButton, Button } from "@material-ui/core"
+import { AppBar, Toolbar, Typography, IconButton, Button, Paper, Hidden, Drawer, List, ListItem, ListItemIcon, ListItemText, Divider } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles";
 import React, { useContext, useState, useEffect } from "react";
 import { PATH_AUTH_CHECK, PATH_SIGN_IN, PATH_SIGN_UP, PATH_USER_PROFILE, PATH_USER_RESUME, PATH_WELCOME, PATH_MAIN, PATH_EXPLORE, PATH_ENTERPRISE } from "../route/paths";
@@ -9,7 +9,8 @@ import { AuthConsumer, AuthContext } from "../context/AuthContext";
 
 import AccountCircleRoundedIcon from "@material-ui/icons/AccountCircleRounded";
 import MenuIcon from "@material-ui/icons/Menu"
-
+import InboxIcon from '@material-ui/icons/MoveToInbox';
+import MailIcon from '@material-ui/icons/Mail';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -20,14 +21,17 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     flexGrow: 1,
-  }
+  },
+  list: {
+    width: 250,
+  },
 }));
 
 export default props => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const { checkUserAuth } = useContext(AuthContext).actions;
-
+  const [drawer, setDrawer] = useState(false);
   useEffect(() => {
     checkUserAuth();
   }, [])
@@ -40,13 +44,42 @@ export default props => {
     setAnchorEl(null);
   };
 
+  const toggleDrawer = b => {
+    setDrawer(b);
+  };
+
+
   return (
     <AppBar position="static">
       {console.log(props)}
       <Toolbar>
-        <IconButton className={classes.menuButton} edge="start" color="inherit" aria-label="menu">
-          <MenuIcon></MenuIcon>
-        </IconButton>
+        <Hidden smUp>
+          <IconButton onClick={e => toggleDrawer(true)} className={classes.menuButton} edge="start" color="inherit" aria-label="menu">
+            <MenuIcon></MenuIcon>
+          </IconButton>
+        </Hidden>
+
+        
+        <Drawer open={drawer} onClose={e => toggleDrawer(false)}>
+          <List>
+            <Link style={{ textDecoration: "none", color: "inherit" }} to={PATH_MAIN}>
+              <ListItem button>
+                <ListItemText primary={"Main"} />
+              </ListItem>
+            </Link>
+            <Link style={{ textDecoration: "none", color: "inherit" }} to={PATH_EXPLORE}>
+              <ListItem button>
+                <ListItemText primary={"Explore"} />
+              </ListItem>
+            </Link>
+            <Link style={{ textDecoration: "none", color: "inherit" }} to={PATH_ENTERPRISE}>
+              <ListItem button>
+                <ListItemText primary={"Enterprise"} />
+              </ListItem>
+            </Link>
+          </List>
+        </Drawer>
+        
         <Typography
           variant="h6"
           color="inherit"
@@ -56,15 +89,17 @@ export default props => {
           }
         >Pickme</Typography>
 
-        <Link style={{ textDecoration: "none", color: "inherit" }} to={PATH_MAIN}>
-          <Button color="inherit">Main</Button>
-        </Link>
-        <Link style={{ textDecoration: "none", color: "inherit" }} to={PATH_EXPLORE}>
-          <Button color="inherit">Explore</Button>
-        </Link>
-        <Link style={{ textDecoration: "none", color: "inherit" }} to={PATH_ENTERPRISE}>
-          <Button color="inherit">Enterprise</Button>
-        </Link>
+        <Hidden smDown>
+          <Link style={{ textDecoration: "none", color: "inherit" }} to={PATH_MAIN}>
+            <Button color="inherit">Main</Button>
+          </Link>
+          <Link style={{ textDecoration: "none", color: "inherit" }} to={PATH_EXPLORE}>
+            <Button color="inherit">Explore</Button>
+          </Link>
+          <Link style={{ textDecoration: "none", color: "inherit", marginRight: 50}} to={PATH_ENTERPRISE}>
+            <Button color="inherit">Enterprise</Button>
+          </Link>
+        </Hidden>
 
         <AuthConsumer>
           {
