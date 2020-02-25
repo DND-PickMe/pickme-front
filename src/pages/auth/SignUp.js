@@ -20,12 +20,12 @@ const SignUp = () => {
     enableReinitialize: true,
     initialValues: {},
     validationSchema: yup.object().shape({
-      orderedAt: yup.string().nullable()
+      email: yup.string().email(),
     }),
     onSubmit: async (values, { setSubmitting, setErrors }) => {
       console.log(values);
       try {
-        const res = await api.post('accounts',values);
+        const res = await api.post('accounts', values);
         if(res.status===201) {
           alert("Success");
         }
