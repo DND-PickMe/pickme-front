@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from "react";
-import {AuthContext} from "../../context/AuthContext";
-import {PATH_MAIN, PATH_SIGN_IN} from "../../route/paths";
+import {AuthContext} from "context/AuthContext";
+import {PATH_MAIN, PATH_SIGN_IN} from "route/paths";
 import qs from "querystring";
 import {Redirect} from "react-router-dom";
 

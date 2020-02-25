@@ -3,15 +3,14 @@ import { makeStyles } from "@material-ui/core/styles";
 import Dialog from "@material-ui/core/Dialog";
 import { DialogContent, TextField, Button, Typography } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import { api } from "../../api";
+import { api } from "api";
 import qs from "querystring";
-import { PATH_AUTH_CHECK, PATH_MAIN } from "../../route/paths";
+import { PATH_AUTH_CHECK, PATH_MAIN } from "route/paths";
 
 const SignIn = props => {
   const classes = useStyles();
   const [inputs, setInputs] = useState({});
   const [open, setOpen] = useState(true);
-  const [messages, setMessages] = useState([]);
 
   const handleInputs = e => {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
@@ -28,7 +27,6 @@ const SignIn = props => {
       })
       .catch(err => {
         console.log(err.response);
-        setMessages(err.response.data);
       });
   };
 

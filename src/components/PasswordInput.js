@@ -1,14 +1,10 @@
 import React, {useState} from "react";
-import {FormControl, InputAdornment, InputLabel, makeStyles, OutlinedInput, Paper} from "@material-ui/core";
+import {FormControl, InputAdornment, InputLabel, OutlinedInput} from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 import {Visibility, VisibilityOff} from "@material-ui/icons";
 
-const useStyles = makeStyles(theme => ({
-}));
-
 const PasswordInput = props => {
-  const classes = useStyles();
-  const [values, setValues] = React.useState({
+  const [values, setValues] = useState({
     password: "",
     showPassword: false
   });
