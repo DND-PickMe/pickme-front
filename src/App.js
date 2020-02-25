@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Switch, withRouter } from "react-router-dom";
-import { PATH_SIGN_IN, PATH_SIGN_UP, PATH_MAIN, PATH_JOBS, PATH_ENTERPRISE, PATH_WELCOME, PATH_USER_PROFILE, PATH_AUTH_CHECK, PATH_USER_RESUME, PATH_EXPLORE } from "./route/paths";
+import { PATH_SIGN_IN, PATH_SIGN_UP, PATH_MAIN, PATH_ENTERPRISE, PATH_WELCOME, PATH_USER_PROFILE, PATH_AUTH_CHECK, PATH_USER_RESUME, PATH_EXPLORE } from "./route/paths";
 import SignIn from "./pages/auth/SignIn";
 import SignUp from "./pages/auth/SignUp";
 import Main from "./pages/main/Main";

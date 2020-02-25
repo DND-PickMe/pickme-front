@@ -1,8 +1,8 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {Link} from "react-router-dom";
-import {PATH_SIGN_IN} from "../route/paths";
-import { Typography, Button, Grid, Container } from "@material-ui/core";
+import {PATH_SIGN_IN} from "route/paths";
+import { Typography, Button, Container } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
   root: {
