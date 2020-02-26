@@ -1,9 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid, Typography, IconButton, Avatar } from "@material-ui/core";
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
-import { Card, CardHeader, CardContent, CardActions } from "@material-ui/core";
+import CardWrapper from "../../components/CardWrapper";
+import { Grid, Paper, Typography, Card, Avatar, CardActions, IconButton, CardContent } from "@material-ui/core";
+import { Favorite } from "@material-ui/icons";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -11,46 +10,34 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(2),
   },
   card: {
-    height: 240,
-  }
+    padding: theme.spacing(2),
+  },
 }));
 
 const Main = props => {
   const classes = useStyles();
-  const number = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  const [target, setTarget] = useState(null);
+  const [card, setCard] = useState([1, 2, 3, 4, 5, 6]);
 
   return (
     <div className={classes.root}>
+      <Typography variant="h4" style={{ marginBottom: 30 }}>좋아요 높은 순위</Typography>
       <Grid container spacing={3} xs={12}>
-        {number.map(num => (
+        {}
+        {card.map(num => (
           <Grid item xs={12} md={4}>
-            <Card className={classes.card} variant="outlined">
-              <CardHeader
-                avatar={
-                  <Avatar aria-label="recipe" className={classes.avatar}>
-                  R
-                </Avatar>
-                }
-                title="Februry 24, 2020"
-                subheader="Hello"
-              />
-              <CardContent>
-                <Typography variant="subtitle2">
-                  닉네임
-                </Typography>
-                <Typography variant="subtitle2">
-                  직군
-                </Typography>
-                <Typography variant="subtitle2">
-                  주요기술
-                </Typography>
-              </CardContent>
-              <CardActions disableSpacing>
-                <IconButton aria-label="add to favorites" style={{marginLeft: 'auto'}}>
-                  <FavoriteIcon />
-                </IconButton>
-                <IconButton aria-label="share">
-                  <ShareIcon />
+            <Card className={classes.card}>
+              <div style={{ display: 'flex', padding: 20 }}>
+                <Avatar style={{width: 120, height: 120}}></Avatar>
+                <div style={{textAlign: 'none', marginLeft: 20}}>
+                  <Typography variant="h6" style={{ marginBottom: 20 }}>신무곤</Typography>
+                  <Typography variant="h6" style={{ marginBottom: 20 }}>Back-End</Typography>
+                  <Typography variant="h6">Java, Spring, Web</Typography>
+                </div>
+              </div>
+              <CardActions>
+                <IconButton style={{marginLeft: 'auto'}}>
+                  <Favorite></Favorite>
                 </IconButton>
               </CardActions>
             </Card>
