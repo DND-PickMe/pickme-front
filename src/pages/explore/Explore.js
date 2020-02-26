@@ -1,42 +1,53 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
-import { InputLabel, FormControl } from "@material-ui/core";
+import { Typography, Grid, Paper } from "@material-ui/core"
 
 const useStyles = makeStyles(theme => ({
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120
-  }
+  root: {
+    flexGrow: 1,
+    margin: theme.spacing(2),
+  },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+    height: 240,
+  },
 }));
 
-const dummyData = {
-  selects: [
-    { label: "업무분야", items: ["front-end", "back-end"] },
-    { label: "희망연봉", items: ["1000~2000", "1500~2000"] }
-  ]
-};
 const Explore = props => {
   const classes = useStyles();
-  const selects = dummyData.selects;
+  const [target, setTarget] = useState(null);
+  const [card, setCard] = useState([1]);
+
+  useEffect(() => {
+    let observer;
+    if (target) {
+      observer = new IntersectionObserver(onIntersect, {threshold: 0.5});
+      observer.observe(target);
+    }
+    return () => observer && observer.disconnect();
+  }, [target, card]);
+
+  const onIntersect = ([entry], observer) => {
+    if (entry.isIntersecting){
+      observer.unobserve(entry.target);
+      setCard(card.concat([1, 1, 1, 1]));
+      observer.observe(entry.target);
+    }
+  }
+
   return (
     <div className={classes.root}>
-      <h1>Explore</h1>
-
-      {selects &&
-        selects.map(select => (
-          <FormControl className={classes.formControl}>
-            <InputLabel id="demo-simple-select-label">
-              {select.label}
-            </InputLabel>
-            <Select labelId="demo-simple-select-label" id="demo-simple-select">
-              {select.items.map((item, idx) => (
-                <MenuItem key={idx} value={30}>{item}</MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+      <Typography variant="h3">Explore</Typography>
+      <Grid container spacing={3} xs={12}>
+        {card.map(num => (
+          <Grid item xs={12} md={4}>
+            <Paper className={classes.paper}>card</Paper>
+          </Grid>
         ))}
+      </Grid>
+      <div ref={setTarget}>waiting...</div>
     </div>
   );
 };

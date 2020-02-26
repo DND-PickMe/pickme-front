@@ -9,8 +9,11 @@ const AuthProvider = props => {
   const [userAuthorized, _setUserAuthorized] = useState(false);
 
   const checkUserAuth = async () => {
+    if (!localStorage.getItem('token')) {
+      return false;
+    }
     try {
-      const res = await  api.get(`/accounts`);
+      const res = await  api.get(`/accounts/profile`);
       console.log(res);
       if(res.status === 200) {
         _setUserAuthorized(true);

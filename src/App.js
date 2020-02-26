@@ -30,8 +30,6 @@ const App = props => {
         {console.log(props)}
         <AppBar {...props}></AppBar>
 
-        <div style={{ marginTop: 70 }} />
-
         <Switch>
           <Route path={PATH_AUTH_CHECK} component={AuthCheck} />
           <Route path={PATH_SIGN_IN} component={SignIn} />
