@@ -31,7 +31,7 @@ const SignUp = () => {
   const [isUser, setIsUser] = useState(true);
   const [userInputs, setUserInputs] = useState({});
   const [epInputs, setEpInputs] = useState({});
-  const [tags, setTags] = useState([]);
+  const [technology, setTechNology] = useState([]);
 
   const userChange = prop => event => {
     setUserInputs({ ...userInputs, [prop]: event.target.value });
@@ -41,13 +41,13 @@ const SignUp = () => {
     setEpInputs({ ...epInputs, [prop]: event.target.value });
   }
 
-  const handleTagChange = tags => {
-    setTags(tags)
+  const handleTechChange = tech => {
+    setTechNology(tech);
   }
 
   const handleSubmitUser = async () => {
     try {
-      const data = {...userInputs, tags};
+      const data = {...userInputs, technology};
       console.log(data);
       const res = await api.post("accounts", data);
       if (res.status===201) {
@@ -85,7 +85,7 @@ const SignUp = () => {
           <div style={{ marginBottom: 20 }} />
           <TextField onChange={userChange("oneLineIntroduce")} fullWidth label="한줄소개" variant="outlined" />
           <div style={{ marginBottom: 20 }} />
-          <TagsInput value={tags} onChange={handleTagChange} />
+          <TagsInput value={technology} onChange={handleTechChange} />
           <div style={{ marginBottom: 20 }} />
           <Button onClick={handleSubmitUser}>Submit</Button>
         </Paper>
