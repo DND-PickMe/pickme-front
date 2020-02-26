@@ -37,6 +37,8 @@ const SignUp = () => {
   }
 
   const handleSubmitUser = async () => {
+    console.log("aaa");
+    
     try {
       const res = await api.post("accounts", userInputs);
       if (res.status===201) {
@@ -75,7 +77,7 @@ const SignUp = () => {
           <div style={{ marginBottom: 20 }} />
           <TextField onChange={userChange("oneLineIntroduce")} fullWidth label="한줄소개" variant="outlined" />
           <div style={{ marginBottom: 20 }} />
-          <Button onClick={() => handleSubmitUser}>Submit</Button>
+          <Button onClick={handleSubmitUser}>Submit</Button>
         </Paper>
         :
         <Paper elevation={3} style={{ padding: 30 }}>
