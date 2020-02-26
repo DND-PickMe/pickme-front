@@ -66,7 +66,7 @@ const SignIn = props => {
         {"Sign In"}
       </Button>
       <Link className={classes.button} to="/sign-up" style={{ textDecoration: "none" }}>
-        <Button fullWidth variant="contained" color="primary" className={classes.button} onClick={handleSignIn}>
+        <Button fullWidth variant="contained" color="primary" className={classes.button}>
           {"Sign Up"}
         </Button>
       </Link>
