@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import CardWrapper from "../../components/CardWrapper";
-import { Grid, Paper, Typography, Card, Avatar, CardActions, IconButton, CardContent } from "@material-ui/core";
+import { Grid, Typography, Card, Avatar, CardActions, IconButton, CardContent } from "@material-ui/core";
 import { Favorite } from "@material-ui/icons";
+import { api } from "api";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -16,30 +16,67 @@ const useStyles = makeStyles(theme => ({
 
 const Main = props => {
   const classes = useStyles();
-  const [target, setTarget] = useState(null);
-  const [card, setCard] = useState([1, 2, 3, 4, 5, 6]);
+  const [accounts, setAccounts] = useState(null);
+
+  useEffect(() => {
+    getAccounts();
+  }, [])
+
+  const getAccounts = async () => {
+    try {
+      const res = await api.get('accounts');
+      if (res.status === 200) {
+        setAccounts(res.data)
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <div className={classes.root}>
-      <Typography variant="h4" style={{ marginBottom: 30 }}>좋아요 높은 순위</Typography>
+
+      <div style={{marginBottom: 30}}/>
+      <Typography variant="h5" style={{ marginBottom: 30 }}>좋아요 높은 순위</Typography>
       <Grid container spacing={3} xs={12}>
-        {}
-        {card.map(num => (
-          <Grid item xs={12} md={4}>
+        {accounts && accounts.map(account => (
+          <Grid item xs={12} md={4} key={account.id}>
             <Card className={classes.card}>
               <div style={{ display: 'flex', padding: 20 }}>
-                <Avatar style={{width: 120, height: 120}}></Avatar>
+                <Avatar style={{width: 120, height: 120}} src={account.image}></Avatar>
                 <div style={{textAlign: 'none', marginLeft: 20}}>
-                  <Typography variant="h6" style={{ marginBottom: 20 }}>신무곤</Typography>
-                  <Typography variant="h6" style={{ marginBottom: 20 }}>Back-End</Typography>
+                  <Typography variant="h6" style={{ marginBottom: 20 }}>{account.nickName}</Typography>
+                  <Typography variant="h6" style={{ marginBottom: 20 }}>직군</Typography>
                   <Typography variant="h6">Java, Spring, Web</Typography>
                 </div>
               </div>
-              <CardActions>
-                <IconButton style={{marginLeft: 'auto'}}>
-                  <Favorite></Favorite>
-                </IconButton>
-              </CardActions>
+              <CardContent>
+                {account.oneLineIntroduce}
+                <Typography variant="subtitle2">{`좋아요 ${account.favoriteCount}`}</Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
+
+      <div style={{marginBottom: 30}}/>
+      <Typography variant="h5" style={{ marginBottom: 30 }}>조회수 높은 순위</Typography>
+      <Grid container spacing={3} xs={12}>
+        {accounts && accounts.map(account => (
+          <Grid item xs={12} md={4} key={account}>
+            <Card className={classes.card}>
+              <div style={{ display: 'flex', padding: 20 }}>
+                <Avatar style={{width: 120, height: 120}} src={account.image}></Avatar>
+                <div style={{textAlign: 'none', marginLeft: 20}}>
+                  <Typography variant="h6" style={{ marginBottom: 20 }}>{account.nickName}</Typography>
+                  <Typography variant="h6" style={{ marginBottom: 20 }}>직군</Typography>
+                  <Typography variant="h6">{account.technology}</Typography>
+                </div>
+              </div>
+              <CardContent>
+                {account.oneLineIntroduce}
+                <Typography variant="subtitle2">{`좋아요 ${account.favoriteCount}`}</Typography>
+              </CardContent>
             </Card>
           </Grid>
         ))}

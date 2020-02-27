@@ -28,7 +28,7 @@ const PasswordInput = props => {
       fullWidth
     >
       <InputLabel htmlFor="outlined-adornment-password">
-        Password
+        {props.label}
       </InputLabel>
       <OutlinedInput
         id="outlined-adornment-password"
@@ -48,7 +48,7 @@ const PasswordInput = props => {
             </IconButton>
           </InputAdornment>
         }
-        labelWidth={70}
+        labelWidth={props.labelWidth? props.labelWidth: 70}
       />
     </FormControl>
   )

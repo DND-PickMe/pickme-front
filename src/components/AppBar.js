@@ -130,7 +130,7 @@ export default props => {
                         to={PATH_USER_RESUME}
                         style={{ textDecoration: "none", color: "inherit" }}
                       >
-                        <MenuItem onClick={closeMenu}>My Resume</MenuItem>
+                        <MenuItem onClick={closeMenu}>Resume</MenuItem>
                       </Link>
                       <MenuItem
                         onClick={() => {
