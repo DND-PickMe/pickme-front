@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { api } from "api";
 import qs from "querystring";
 import { PATH_AUTH_CHECK, PATH_MAIN } from "route/paths";
+import Swal from 'sweetalert2';
 
 const SignIn = props => {
   const classes = useStyles();
@@ -23,10 +24,20 @@ const SignIn = props => {
       .then(res => {
         let token = res.data.jwt;
         localStorage.setItem("token", token);
+        Swal.fire({
+          icon: 'success',
+          title: '로그인 성공!',
+          showConfirmButton: false,
+          timer: 1500
+        })
         props.history.replace(`${PATH_AUTH_CHECK}?redirect=${redirect}`);
       })
       .catch(err => {
-        console.log(err.response);
+        Swal.fire({
+          icon: 'error',
+          title: '로그인 실패',
+          text: '실패 메시지',
+        })
       });
   };
 
@@ -39,7 +50,7 @@ const SignIn = props => {
       }}
       aria-labelledby="form-dialog-title"
     >
-      <div className={classes.root}>
+      <form className={classes.root}>
       <Typography variant="h2" className={classes.title}>
         SignIn
       </Typography>
@@ -70,7 +81,7 @@ const SignIn = props => {
           {"Sign Up"}
         </Button>
       </Link>
-      </div>
+      </form>
 
     </Dialog>
   );
