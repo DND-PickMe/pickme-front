@@ -10,7 +10,7 @@ import Welcome from "./pages/Welcome";
 import Profile from "./pages/auth/Profile";
 import Resume from './pages/resume/Resume';
 import { PrivateRoute } from "./route/PrivateRoute";
-import { AuthProvider } from "./context/AuthContext";
+import { AuthProvider, AuthConsumer } from "./context/AuthContext";
 import AuthCheck from "./pages/auth/AuthCheck";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "./components/AppBar";
@@ -27,24 +27,22 @@ const App = props => {
   return (
     <div className={classes.root}>
       <AuthProvider>
-        {console.log(props)}
-        <AppBar {...props}></AppBar>
+          <AppBar {...props}></AppBar>
+          <Switch>
+            <Route path={PATH_AUTH_CHECK} component={AuthCheck} />
+            <Route path={PATH_SIGN_IN} component={SignIn} />
+            <Route path={PATH_SIGN_IN} component={SignIn} />
+            <Route path={PATH_SIGN_UP} component={SignUp} />
 
-        <Switch>
-          <Route path={PATH_AUTH_CHECK} component={AuthCheck} />
-          <Route path={PATH_SIGN_IN} component={SignIn} />
-          <Route path={PATH_SIGN_IN} component={SignIn} />
-          <Route path={PATH_SIGN_UP} component={SignUp} />
+            <Route path={PATH_MAIN} component={Main} />
+            <Route path={PATH_EXPLORE} component={Explore} />
+            <Route path={PATH_ENTERPRISE} component={Enterprise} />
 
-          <Route path={PATH_MAIN} component={Main} />
-          <Route path={PATH_EXPLORE} component={Explore} />
-          <Route path={PATH_ENTERPRISE} component={Enterprise} />
+            <PrivateRoute path={PATH_USER_PROFILE} component={Profile} />
+            <Route path={PATH_USER_RESUME} component={Resume} />
 
-          <PrivateRoute path={PATH_USER_PROFILE} component={Profile} />
-          <Route path={PATH_USER_RESUME} component={Resume} />
-
-          <Route path={PATH_WELCOME} component={Welcome} />
-        </Switch>
+            <Route path={PATH_WELCOME} component={Welcome} />
+          </Switch>
       </AuthProvider>
     </div>
   );

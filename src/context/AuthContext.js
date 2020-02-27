@@ -14,7 +14,6 @@ const AuthProvider = props => {
     }
     try {
       const res = await  api.get(`/accounts/profile`);
-      console.log(res);
       if(res.status === 200) {
         _setUserAuthorized(true);
         _setUser(res.data);
@@ -22,7 +21,6 @@ const AuthProvider = props => {
       }
     } catch (err) {
       _setUserAuthorized(false);
-      console.log(err);
       return false;
     }
   };

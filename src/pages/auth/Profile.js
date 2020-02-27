@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
 
 const Profile = props => {
   const classes = useStyles();
-  const [account, setAccount] = useState({});
+  const [account, setAccount] = useState(null);
   const [technology, setTechNology] = useState([]);
   const [tags, setTags] = useState(null);
 
@@ -29,12 +29,13 @@ const Profile = props => {
 
   useEffect(() => {
     getProfile();
-    getTags();
+    // getTags();
   }, []);
 
   const getProfile = () => {
     api.get("accounts/profile").then(res => {
       setAccount(res.data);
+      console.log(res.data);
     }).catch(err => {
       console.log(err);
     })
@@ -69,74 +70,105 @@ const Profile = props => {
     setAccount({ ...account, [key]: event.target.value });
   }
 
+  const deleteInterview = id  => {
+    api.delete(`selfInterviews/${id}`).then(res => {
+      if (res.status === 200) {
+        Swal.fire({
+          title: "삭제 성공",
+          icon: "success",
+          showConfirmButton: false,
+          timer: 1500
+        })
+      }}
+    ).catch(err => {
+      console.log(err);
+    })
+  }
+
   return (
     <div className={classes.root}>
-      {console.log(tags)}
-      <div style={{ marginBottom: 20 }} />
-      <Paper className={classes.paper} elevation={3}>
-        <Typography variant="h6" style={{ marginBottom: 20 }}>기타 정보</Typography>
+      {account &&
+        <>
+          <div style={{ marginBottom: 20 }} />
+          <Paper className={classes.paper} elevation={3}>
+            <Typography variant="h6" style={{ marginBottom: 20 }}>기타 정보</Typography>
 
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <Avatar src={account.image} style={{ alignSelf: 'center', width: 180, height: 180 }}></Avatar>
-        </div>
-        <Typography variant="h6" style={{ textAlign: 'center', marginBottom: 20 }}>{account.email}</Typography>
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <Avatar src={account.image} style={{ alignSelf: 'center', width: 180, height: 180 }}></Avatar>
+            </div>
+            <Typography variant="h6" style={{ textAlign: 'center', marginBottom: 20 }}>{account.email}</Typography>
 
-        <TextField
-          onChange={handleModify("nickName")}
-          value={account.nickName}
-          InputLabelProps={{ shrink: true }}
-          fullWidth label="이름"
-          variant="outlined" />
-        <div style={{ marginBottom: 20 }} />
-        <TextField
-          onChange={handleModify("socialLink")}
-          value={account.socialLink}
-          InputLabelProps={{ shrink: true }}
-          fullWidth label="소셜링크"
-          variant="outlined" />
-        <div style={{ marginBottom: 20 }} />
-        <TextField
-          onChange={handleModify("position")}
-          value={account.position}
-          InputLabelProps={{ shrink: true }}
-          fullWidth label="직군"
-          variant="outlined" />
-        <div style={{ marginBottom: 20 }} />
-        <TextField
-          onChange={handleModify("oneLineIntroduce")}
-          value={account.oneLineIntroduce}
-          InputLabelProps={{ shrink: true }}
-          fullWidth label="한줄소개"
-          variant="outlined" />
-        <div style={{ display: 'flex', justifyContent: "flex-end" }}>
-          <Button onClick={() => submitAccount()} variant="contained" color="primary" style={{ marginTop: 20 }}>정보 수정</Button>
-        </div>
-      </Paper>
+            <TextField
+              onChange={handleModify("nickName")}
+              value={account.nickName}
+              InputLabelProps={{ shrink: true }}
+              fullWidth label="이름"
+              variant="outlined" />
+            <div style={{ marginBottom: 20 }} />
+            <TextField
+              onChange={handleModify("socialLink")}
+              value={account.socialLink}
+              InputLabelProps={{ shrink: true }}
+              fullWidth label="소셜링크"
+              variant="outlined" />
+            <div style={{ marginBottom: 20 }} />
+            <TextField
+              onChange={handleModify("position")}
+              value={account.position}
+              InputLabelProps={{ shrink: true }}
+              fullWidth label="직군"
+              variant="outlined" />
+            <div style={{ marginBottom: 20 }} />
+            <TextField
+              onChange={handleModify("oneLineIntroduce")}
+              value={account.oneLineIntroduce}
+              InputLabelProps={{ shrink: true }}
+              fullWidth label="한줄소개"
+              variant="outlined" />
+            <div style={{ display: 'flex', justifyContent: "flex-end" }}>
+              <Button onClick={() => submitAccount()} variant="contained" color="primary" style={{ marginTop: 20 }}>정보 수정</Button>
+            </div>
+          </Paper>
 
-      <div style={{ marginBottom: 20 }} />
-      <Paper className={classes.paper} elevation={3}>
-        <Typography variant="h6" style={{ marginBottom: 20 }}>기술 태그</Typography>
-        <TagsInput value={technology} onChange={handleTechChange} />
-        <div style={{ display: 'flex', justifyContent: "flex-end" }}>
-          <Button onClick={() => submitTech()} variant="contained" color="primary" style={{ marginTop: 20 }}>태그 추가</Button>
-        </div>
-      </Paper>
+          <div style={{ marginBottom: 20 }} />
+          <Paper className={classes.paper} elevation={3}>
+            <Typography variant="h6" style={{ marginBottom: 20 }}>기술 태그</Typography>
+            <TagsInput value={technology} onChange={handleTechChange} />
+            <div style={{ display: 'flex', justifyContent: "flex-end" }}>
+              <Button onClick={() => submitTech()} variant="contained" color="primary" style={{ marginTop: 20 }}>태그 추가</Button>
+            </div>
+          </Paper>
 
-      {account.email}
-      {account.nickName}
-      {account.favorite}
-      {account.position}
-      {account.userRole}
-      {account.createdAt}
-      {account.oneLineIntroduce}
-      {account.image}
-      {account.socialLink}
-      {account.enterprise}
-      {account.experiences}
-      {account.licenses}
-      {account.prizes}
-      {account.projects}
-      {account.selfInterviews}
+          <Paper elevation={3} style={{ padding: 30 }}>
+            <Typography variant="h6" style={{ marginBottom: 20 }}>셀프 인터뷰</Typography>
+            {account.selfInterviews.map(interview => (
+              <Paper elevation={3} key={interview.id} style={{padding: 20, marginBottom: 20}}>
+                <Typography variant="subtitle1" style={{ marginBottom: 20 }}>{interview.title}</Typography>
+                <Typography variant="subtitle2" style={{ marginBottom: 20 }}>{interview.content}</Typography>
+                <div style={{ display: 'flex', justifyContent: "flex-end" }}>
+                  <Button variant="contained" color="primary" style={{ marginRight: 20}}>수정</Button>
+                  <Button onClick={() => deleteInterview(interview.id)} variant="contained" color="secondary">삭제</Button>
+                </div>
+              </Paper>
+            ))}
+          </Paper>
+
+          {account.email}
+          {account.nickName}
+          {account.favorite}
+          {account.position}
+          {account.userRole}
+          {account.createdAt}
+          {account.oneLineIntroduce}
+          {account.image}
+          {account.socialLink}
+          {account.enterprise}
+          {account.experiences}
+          {account.licenses}
+          {account.prizes}
+          {account.projects}
+        </>
+      }
     </div>
   );
 };
