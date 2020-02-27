@@ -1,10 +1,10 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Paper, Typography, TextField, Button } from '@material-ui/core';
+import { AuthConsumer } from 'context/AuthContext';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    flexGrow: 1,
     marginLeft: theme.spacing(8),
     marginRight: theme.spacing(8),
   },
@@ -19,6 +19,11 @@ const Resume = () => {
   return (
     <div className={classes.root}>
       <Typography variant="h4" style={{ marginTop: 20, marginBottom: 20 }}>이력서 추가</Typography>
+      <AuthConsumer> 
+        {auth => {
+          console.log(auth.state);
+        }}
+      </AuthConsumer>
 
       <Paper className={classes.paper} elevation={3}>
         <Typography variant="h6" style={{ marginBottom: 20 }}>셀프 인터뷰</Typography>

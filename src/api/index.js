@@ -6,6 +6,7 @@ export const api = axios.create({
 });
 
 api.defaults.headers.post['Content-Type'] = 'application/json';
+api.defaults.headers.put['Content-Type'] = 'application/json';
 
 api.interceptors.request.use(
   config => {

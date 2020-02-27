@@ -3,11 +3,8 @@ import TextField from "@material-ui/core/TextField/TextField";
 import { Button, makeStyles, Paper, Grid } from "@material-ui/core";
 import PasswordInput from "components/PasswordInput";
 import { api } from "api";
-import TagsInput from 'react-tagsinput'
-import './tagsinput.css'
 import Swal from 'sweetalert2';
-import { getThemeProps } from "@material-ui/styles";
-import { PATH_MAIN, PATH_SIGN_IN } from "route/paths";
+import { PATH_SIGN_IN } from "route/paths";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -34,7 +31,6 @@ const SignUp = props => {
   const [isUser, setIsUser] = useState(true);
   const [userInputs, setUserInputs] = useState({});
   const [epInputs, setEpInputs] = useState({});
-  const [technology, setTechNology] = useState([]);
 
   const userChange = prop => event => {
     setUserInputs({ ...userInputs, [prop]: event.target.value });
@@ -42,10 +38,6 @@ const SignUp = props => {
 
   const epChange = prop => event => {
     setEpInputs({ ...epInputs, [prop]: event.target.value });
-  }
-
-  const handleTechChange = tech => {
-    setTechNology(tech);
   }
 
   const handleSubmitUser = async () => {
@@ -132,12 +124,6 @@ const SignUp = props => {
           <TextField onChange={userChange("nickName")} fullWidth label="이름" variant="outlined" />
           <div style={{ marginBottom: 20 }} />
           <TextField onChange={userChange("oneLineIntroduce")} fullWidth label="한줄소개" variant="outlined" />
-          <div style={{ marginBottom: 20 }} />
-          {/* <TextField onChange={userChange("socialLik")} fullWidth label="소셜링크" variant="outlined" />
-          <div style={{ marginBottom: 20 }} />
-          <TextField onChange={userChange("postion")} fullWidth label="포지션" variant="outlined" />
-          <div style={{ marginBottom: 20 }} />
-          <TagsInput value={technology} onChange={handleTechChange} /> */}
           <div style={{ marginBottom: 20 }} />
           <Button onClick={handleSubmitUser}>Submit</Button>
         </Paper>
