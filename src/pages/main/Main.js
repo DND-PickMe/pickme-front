@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid, Typography, Card, Avatar, CardActions, IconButton, CardContent } from "@material-ui/core";
+import { Grid, Typography, Card, Avatar, CardContent } from "@material-ui/core";
 import { Favorite } from "@material-ui/icons";
 import { api } from "api";
 
@@ -26,7 +26,7 @@ const Main = props => {
     try {
       const res = await api.get('accounts');
       if (res.status === 200) {
-        setAccounts(res.data)
+        setAccounts(res.data._embedded.accountResponseDtoList)
       }
     } catch (err) {
       console.log(err);

@@ -10,7 +10,6 @@ export const PrivateRoute = ({ component: Component, ...rest }) => (
       <AuthConsumer>
         {
           (auth) => {
-            console.log(auth.state);
             return (
               auth.state.userAuthorized
               ? <Component {...props}/>

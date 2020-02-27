@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Paper, Typography, TextField, Button } from '@material-ui/core';
 import { AuthConsumer } from 'context/AuthContext';
+import { api } from 'api';
+import Swal from 'sweetalert2';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -15,23 +17,48 @@ const useStyles = makeStyles(theme => ({
 }));
 const Resume = () => {
   const classes = useStyles();
+  const [interview, setInterview] = useState({});
+  const [account, setAccount] = useState({});
+
+  useEffect(() => {
+    getProfile();
+  }, []);
+
+  const getProfile = () => {
+    api.get("accounts/profile").then(res => {
+      setAccount(res.data);
+    }).catch(err => {
+      console.log(err);
+    })
+  }
+  const changeInterview = prop => event => {
+    setInterview({ ...interview, [prop]: event.target.value });
+  }
+
+  const submitInterview = () => {
+    api.post(`selfInterviews`, interview).then(res => {
+      if (res.status === 201) {
+        Swal.fire({
+          title: '셀프 인터뷰 등록 성공!',
+          icon: "success",
+          showConfirmButton: false,
+          timer: 1500
+        })
+      }
+    })
+  }
 
   return (
     <div className={classes.root}>
       <Typography variant="h4" style={{ marginTop: 20, marginBottom: 20 }}>이력서 추가</Typography>
-      <AuthConsumer> 
-        {auth => {
-          console.log(auth.state);
-        }}
-      </AuthConsumer>
 
       <Paper className={classes.paper} elevation={3}>
         <Typography variant="h6" style={{ marginBottom: 20 }}>셀프 인터뷰</Typography>
-        <TextField id="interview-title" fullWidth label="Title" variant="outlined" />
+        <TextField onChange={changeInterview("title")} id="interview-title" fullWidth label="Title" variant="outlined" />
         <div style={{ marginBottom: 10 }} />
-        <TextField id="interview-content" fullWidth multiline rows="10" label="Content" variant="outlined" />
+        <TextField onChange={changeInterview("content")} id="interview-content" fullWidth multiline rows="10" label="Content" variant="outlined" />
         <div style={{ display: 'flex', justifyContent: "flex-end" }}>
-          <Button variant="contained" color="primary" style={{ marginTop: 20 }}>셀프인터뷰 추가</Button>
+          <Button onClick={submitInterview} variant="contained" color="primary" style={{ marginTop: 20 }}>셀프인터뷰 추가</Button>
         </div>
       </Paper>
 
@@ -84,6 +111,7 @@ const Resume = () => {
           <Button variant="contained" color="primary" style={{ marginTop: 20 }}>프로젝트 추가</Button>
         </div>
       </Paper>
+      }}
     </div >
   );
 };

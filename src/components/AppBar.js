@@ -30,6 +30,7 @@ export default props => {
   const [anchorEl, setAnchorEl] = useState(null);
   const { checkUserAuth } = useContext(AuthContext).actions;
   const [drawer, setDrawer] = useState(false);
+    
   useEffect(() => {
     checkUserAuth();
   }, [])
@@ -49,7 +50,6 @@ export default props => {
 
   return (
     <AppBar position="static">
-      {console.log(props)}
       <Toolbar>
         <Hidden smUp>
           <IconButton onClick={e => toggleDrawer(true)} className={classes.menuButton} edge="start" color="inherit" aria-label="menu">
@@ -102,7 +102,6 @@ export default props => {
         <AuthConsumer>
           {
             auth => {
-              console.log(auth);
               return (
                 auth.state.userAuthorized
                   ?
