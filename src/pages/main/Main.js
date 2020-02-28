@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid, Typography, Card, Avatar, CardContent } from "@material-ui/core";
+import { Grid, Typography, Card, Avatar, CardContent, Chip } from "@material-ui/core";
 import { Favorite } from "@material-ui/icons";
 import { api } from "api";
 
@@ -24,7 +24,7 @@ const Main = props => {
 
   const getAccounts = async () => {
     try {
-      const res = await api.get('accounts');
+      const res = await api.get('accounts', {params: {orderBy: 'favorite'}});
       if (res.status === 200) {
         setAccounts(res.data._embedded.accountResponseDtoList)
       }
@@ -47,12 +47,14 @@ const Main = props => {
                 <div style={{textAlign: 'none', marginLeft: 20}}>
                   <Typography variant="h6" style={{ marginBottom: 20 }}>{account.nickName}</Typography>
                   <Typography variant="h6" style={{ marginBottom: 20 }}>직군</Typography>
-                  <Typography variant="h6">Java, Spring, Web</Typography>
+                  <Chip style={{marginRight: 10}} label="Java" />
+                  <Chip style={{marginRight: 10}} label="Spring" />
+                  <Chip style={{marginRight: 10}} label="Spring boot" />
                 </div>
               </div>
               <CardContent>
                 {account.oneLineIntroduce}
-                <Typography variant="subtitle2">{`좋아요 ${account.favoriteCount}`}</Typography>
+                <Typography style={{textAlign: 'right'}} variant="subtitle2">{`좋아요 ${account.favoriteCount}`}</Typography>
               </CardContent>
             </Card>
           </Grid>
