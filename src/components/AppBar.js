@@ -1,7 +1,7 @@
 import { AppBar, Toolbar, Typography, IconButton, Button, Hidden, Drawer, List, ListItem, ListItemText } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles";
 import React, { useContext, useState, useEffect } from "react";
-import { PATH_AUTH_CHECK, PATH_SIGN_IN, PATH_SIGN_UP, PATH_USER_PROFILE, PATH_USER_RESUME, PATH_WELCOME, PATH_MAIN, PATH_EXPLORE, PATH_ENTERPRISE } from "../route/paths";
+import { PATH_AUTH_CHECK, PATH_SIGN_IN, PATH_SIGN_UP, PATH_USER_PROFILE, PATH_ADD_RESUME, PATH_WELCOME, PATH_MAIN, PATH_EXPLORE, PATH_ENTERPRISE } from "../route/paths";
 import { Link } from "react-router-dom";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -126,7 +126,7 @@ export default props => {
                         <MenuItem onClick={closeMenu}>Profile</MenuItem>
                       </Link>
                       <Link
-                        to={PATH_USER_RESUME}
+                        to={PATH_ADD_RESUME}
                         style={{ textDecoration: "none", color: "inherit" }}
                       >
                         <MenuItem onClick={closeMenu}>Resume</MenuItem>

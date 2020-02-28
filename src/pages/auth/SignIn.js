@@ -33,10 +33,11 @@ const SignIn = props => {
         props.history.replace(`${PATH_AUTH_CHECK}?redirect=${redirect}`);
       })
       .catch(err => {
+        const message = err.response.data;
         Swal.fire({
           icon: 'error',
           title: '로그인 실패',
-          text: '실패 메시지',
+          text: message,
         })
       });
   };
