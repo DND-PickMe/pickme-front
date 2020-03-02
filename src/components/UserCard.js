@@ -1,22 +1,15 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles"
 import { Grid, Avatar, Typography, Chip, CardContent, Card } from "@material-ui/core";
-import { __POSITIONS } from "constants/values";
+import { __POSITIONS, __CAREER } from "constants/values";
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1,
-    margin: theme.spacing(2),
-  },
-  card: {
-    padding: theme.spacing(2),
-  },
 }));
 
 const UserCard = props => {
   const classes = useStyles();
   return (
-    <Grid container spacing={3} xs={12}>
+    <Grid container spacing={3}>
       {props.accounts && props.accounts.map(account => (
         <Grid item xs={12} md={4} key={account.id}
           onClick={
@@ -38,6 +31,7 @@ const UserCard = props => {
               </div>
             </div>
             <CardContent>
+              <Typography variant="subtitle2">{__CAREER[account.career]}</Typography>
               {account.oneLineIntroduce}
               <Typography style={{ textAlign: 'right' }} variant="subtitle2">{`조회수 ${account.hits} 좋아요 ${account.favoriteCount}`}</Typography>
             </CardContent>

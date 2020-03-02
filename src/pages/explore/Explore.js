@@ -1,31 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid, Select, FormControl, MenuItem, InputLabel, Card, TextField, Button } from "@material-ui/core"
+import { Grid, Select, FormControl, MenuItem, InputLabel, Card, TextField, Button, Input } from "@material-ui/core"
 import { api } from "api";
 import { __POSITIONS, __CAREER } from "constants/values";
 import UserCard from "components/UserCard";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    flexGrow: 1,
-    margin: theme.spacing(2),
-  },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-    height: 240,
   },
   formControl: {
-    margin: theme.spacing(1),
     minWidth: 120,
   },
 }));
 
 
+let loadUrl = 'accounts';
+let loadable = true;
 const Explore = props => {
-  let loadable = true;
-  let loadUrl = 'accounts';
   const classes = useStyles();
   const [target, setTarget] = useState(null);
   const [accounts, setAccounts] = useState([]);
@@ -34,7 +25,7 @@ const Explore = props => {
   const getAccounts = async () => {
     if (!loadable) { return }
     try {
-      const res = await api.get(loadUrl);
+      const res = await api.get(loadUrl, { params: { size: 18 } });
       if (res.status === 200) {
         const results = res.data._embedded.accountResponseDtoList
         setAccounts(accounts.concat(results))
@@ -50,12 +41,13 @@ const Explore = props => {
   };
 
   useEffect(() => {
-    const observer = new IntersectionObserver(handleIntersection, { threshold: 0.5 });
+    let observer;
     if (target) {
+      observer = new IntersectionObserver(handleIntersection, { threshold: 0.5 });
       observer.observe(target);
     }
+    return () => observer && observer.disconnect();
   }, [target, accounts]);
-
 
   const handleIntersection = entrys => {
     const first = entrys[0];
@@ -71,10 +63,11 @@ const Explore = props => {
 
   return (
     <div className={classes.root}>
-      <Card elevation={1}>
-        <FormControl variant="outlined" className={classes.formControl}>
+      <Card elevation={1} style={{margin: 12, padding: 8}}>
+        <FormControl variant="outlined" className={classes.formControl} style={{marginRight: 12}}>
           <InputLabel id="demo-simple-select-label">직군</InputLabel>
           <Select
+            labelWidth={40}
             value={filter.position}
             onChange={filterChange("position")}
           >
@@ -84,9 +77,10 @@ const Explore = props => {
           </Select>
         </FormControl>
 
-        <FormControl variant="outlined" className={classes.formControl}>
+        <FormControl variant="outlined" className={classes.formControl} style={{marginRight: 12}}>
           <InputLabel id="demo-simple-select-label">경력</InputLabel>
           <Select
+            labelWidth={40}
             value={filter.career}
             onChange={filterChange("career")}
           >
@@ -96,20 +90,19 @@ const Explore = props => {
           </Select>
         </FormControl>
 
-        <FormControl variant="outlined" className={classes.formControl}>
+        <FormControl variant="outlined" className={classes.formControl} style={{marginRight: 12}}>
           <TextField label="검색" variant="outlined" />
         </FormControl>
 
-        <FormControl variant="outlined" className={classes.formControl}>
-          <Button style={{height: "100%"}} variant="outlined">검색</Button>
-        </FormControl>
+        <Button variant="contained" color="primary" style={{marginRight: 12, height: 56}}>검색</Button>
       </Card>
       <div style={{ marginTop: 20 }} />
+
       <Grid container spacing={3} xs={12}>
         <UserCard accounts={accounts} {...props} />
       </Grid>
       <div ref={setTarget} style={{ marginTop: 20 }}>데이터가 없습니다.</div>
-    </div>
+    </div >
   );
 };
 

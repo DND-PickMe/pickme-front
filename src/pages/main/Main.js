@@ -27,7 +27,7 @@ const Main = props => {
 
   const getAccountsByFavorite = async () => {
     try {
-      const res = await api.get('accounts', { params: { orderBy: 'favorite' } });
+      const res = await api.get('accounts', { params: { orderBy: 'favorite', size: 6 } });
       if (res.status === 200) {
         f_setAccounts(res.data._embedded.accountResponseDtoList)
       }
@@ -38,7 +38,7 @@ const Main = props => {
 
   const getAccountsByHits = async () => {
     try {
-      const res = await api.get('accounts', { params: { orderBy: 'hits' } });
+      const res = await api.get('accounts', { params: { orderBy: 'hits', size: 6 } });
       if (res.status === 200) {
         h_setAccounts(res.data._embedded.accountResponseDtoList)
       }
@@ -50,13 +50,13 @@ const Main = props => {
     <div className={classes.root}>
 
       <div style={{ marginBottom: 30 }} />
-      <Typography variant="h5" style={{ marginBottom: 30 }}>좋아요 높은 순위</Typography>
+      <Typography variant="h5" style={{ marginLeft: 12, marginBottom: 30 }}>좋아요 높은 순위</Typography>
       <Grid container spacing={3} xs={12}>
         <UserCard accounts={f_accounts} {...props} />
       </Grid>
 
       <div style={{ marginBottom: 30 }} />
-      <Typography variant="h5" style={{ marginBottom: 30 }}>조회수 높은 순위</Typography>
+      <Typography variant="h5" style={{ marginLeft:12, marginBottom: 30 }}>조회수 높은 순위</Typography>
       <Grid container spacing={3} xs={12}>
         <UserCard accounts={h_accounts} {...props} />
       </Grid>
