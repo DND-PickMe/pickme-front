@@ -11,17 +11,11 @@ import AccountCircleRoundedIcon from "@material-ui/icons/AccountCircleRounded";
 import MenuIcon from "@material-ui/icons/Menu"
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1,
-  },
   menuButton: {
     marginRight: theme.spacing(2),
   },
   title: {
     flexGrow: 1,
-  },
-  list: {
-    width: 250,
   },
 }));
 
@@ -30,7 +24,7 @@ export default props => {
   const [anchorEl, setAnchorEl] = useState(null);
   const { checkUserAuth } = useContext(AuthContext).actions;
   const [drawer, setDrawer] = useState(false);
-    
+
   useEffect(() => {
     checkUserAuth();
   }, [])
@@ -57,7 +51,7 @@ export default props => {
           </IconButton>
         </Hidden>
 
-        
+
         <Drawer open={drawer} onClose={e => toggleDrawer(false)}>
           <List>
             <Link style={{ textDecoration: "none", color: "inherit" }} to={PATH_MAIN}>
@@ -77,7 +71,7 @@ export default props => {
             </Link>
           </List>
         </Drawer>
-        
+
         <Typography
           variant="h6"
           color="inherit"
@@ -94,7 +88,7 @@ export default props => {
           <Link style={{ textDecoration: "none", color: "inherit" }} to={PATH_EXPLORE}>
             <Button color="inherit">Explore</Button>
           </Link>
-          <Link style={{ textDecoration: "none", color: "inherit", marginRight: 50}} to={PATH_ENTERPRISE}>
+          <Link style={{ textDecoration: "none", color: "inherit", marginRight: 50 }} to={PATH_ENTERPRISE}>
             <Button color="inherit">Enterprise</Button>
           </Link>
         </Hidden>
@@ -134,8 +128,9 @@ export default props => {
                       <MenuItem
                         onClick={() => {
                           localStorage.removeItem("token");
-                          props.history.replace(PATH_AUTH_CHECK);
                           closeMenu();
+                          checkUserAuth();
+                          props.history.replace(PATH_AUTH_CHECK);
                         }}
                       >
                         Logout

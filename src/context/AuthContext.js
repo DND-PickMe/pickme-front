@@ -10,6 +10,7 @@ const AuthProvider = props => {
 
   const checkUserAuth = async () => {
     if (!localStorage.getItem('token')) {
+      _setUserAuthorized(false);
       return false;
     }
     try {

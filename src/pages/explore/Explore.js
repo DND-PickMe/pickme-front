@@ -101,7 +101,7 @@ const Explore = props => {
       <Grid container spacing={3} xs={12}>
         <UserCard accounts={accounts} {...props} />
       </Grid>
-      <div ref={setTarget} style={{ marginTop: 20 }}>데이터가 없습니다.</div>
+      <div ref={setTarget} style={{ margin: 20 }}>데이터가 없습니다.</div>
     </div >
   );
 };
