@@ -49,6 +49,11 @@ const Explore = props => {
     return () => observer && observer.disconnect();
   }, [target, accounts]);
 
+  useEffect(() => {
+    loadUrl = 'accounts';
+    loadable = true;
+  }, [])
+
   const handleIntersection = entrys => {
     const first = entrys[0];
     if (first.isIntersecting) {
@@ -63,8 +68,8 @@ const Explore = props => {
 
   return (
     <div className={classes.root}>
-      <Card elevation={1} style={{margin: 12, padding: 8}}>
-        <FormControl variant="outlined" className={classes.formControl} style={{marginRight: 12}}>
+      <Card elevation={1} style={{ margin: 12, padding: 8 }}>
+        <FormControl variant="outlined" className={classes.formControl} style={{ marginRight: 12 }}>
           <InputLabel id="demo-simple-select-label">직군</InputLabel>
           <Select
             labelWidth={40}
@@ -77,7 +82,7 @@ const Explore = props => {
           </Select>
         </FormControl>
 
-        <FormControl variant="outlined" className={classes.formControl} style={{marginRight: 12}}>
+        <FormControl variant="outlined" className={classes.formControl} style={{ marginRight: 12 }}>
           <InputLabel id="demo-simple-select-label">경력</InputLabel>
           <Select
             labelWidth={40}
@@ -90,11 +95,11 @@ const Explore = props => {
           </Select>
         </FormControl>
 
-        <FormControl variant="outlined" className={classes.formControl} style={{marginRight: 12}}>
+        <FormControl variant="outlined" className={classes.formControl} style={{ marginRight: 12 }}>
           <TextField label="검색" variant="outlined" />
         </FormControl>
 
-        <Button variant="contained" color="primary" style={{marginRight: 12, height: 56}}>검색</Button>
+        <Button variant="contained" color="primary" style={{ marginRight: 12, height: 56 }}>검색</Button>
       </Card>
       <div style={{ marginTop: 20 }} />
 
