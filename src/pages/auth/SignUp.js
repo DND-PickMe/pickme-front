@@ -69,12 +69,12 @@ const SignUp = props => {
     } catch (err) {
       const messages = [];
       err.response.data.map(message => messages.
-        push(`<ul><b>${message.field}</b>는 ${message.defaultMessage}</ul>`));
+      push(`<ul>${message}</ul>`));
 
       Swal.fire({
         icon: 'error',
         title: '회원가입 실패',
-        html: messages.join('\n\n')
+        html: messages.join('\n')
       })
     }
   }
@@ -97,12 +97,12 @@ const SignUp = props => {
     } catch (err) {
       const messages = [];
       err.response.data.map(message => messages.
-        push(`<ul><b>${message.field}</b>는 ${message.defaultMessage}</ul>`));
+      push(`<ul>${message}</ul>`));
 
       Swal.fire({
         icon: 'error',
         title: '회원가입 실패',
-        html: messages.join('\n\n')
+        html: messages.join('\n')
       })
     }
   }

@@ -33,11 +33,14 @@ const SignIn = props => {
         props.history.replace(`${PATH_AUTH_CHECK}?redirect=${redirect}`);
       })
       .catch(err => {
+        const messages = [];
+        err.response.data.map(message => messages.
+          push(`<ul>${message}</ul>`));
         const message = err.response.data;
         Swal.fire({
           icon: 'error',
           title: '로그인 실패',
-          text: message,
+          html: messages.join('\n\n')
         })
       });
   };
@@ -52,36 +55,36 @@ const SignIn = props => {
       aria-labelledby="form-dialog-title"
     >
       <form className={classes.root}>
-      <Typography variant="h2" className={classes.title}>
-        SignIn
+        <Typography variant="h2" className={classes.title}>
+          SignIn
       </Typography>
-      <DialogContent>
-        <TextField
-          className={classes.field}
-          autoFocus
-          label="Email"
-          type="email"
-          name="email"
-          onChange={e => handleInputs(e)}
-          fullWidth
-        />
-        <TextField
-          className={classes.field}
-          label="Password"
-          name="password"
-          type="password"
-          onChange={e => handleInputs(e)}
-          fullWidth
-        />
-      </DialogContent>
-      <Button fullWidth variant="contained" color="primary" className={classes.button} onClick={handleSignIn}>
-        {"Sign In"}
-      </Button>
-      <Link className={classes.button} to="/sign-up" style={{ textDecoration: "none" }}>
-        <Button fullWidth variant="contained" color="primary" className={classes.button}>
-          {"Sign Up"}
+        <DialogContent>
+          <TextField
+            className={classes.field}
+            autoFocus
+            label="Email"
+            type="email"
+            name="email"
+            onChange={e => handleInputs(e)}
+            fullWidth
+          />
+          <TextField
+            className={classes.field}
+            label="Password"
+            name="password"
+            type="password"
+            onChange={e => handleInputs(e)}
+            fullWidth
+          />
+        </DialogContent>
+        <Button fullWidth variant="contained" color="primary" className={classes.button} onClick={handleSignIn}>
+          {"Sign In"}
         </Button>
-      </Link>
+        <Link className={classes.button} to="/sign-up" style={{ textDecoration: "none" }}>
+          <Button fullWidth variant="contained" color="primary" className={classes.button}>
+            {"Sign Up"}
+          </Button>
+        </Link>
       </form>
 
     </Dialog>
