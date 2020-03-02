@@ -1,54 +1,108 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Grid, Paper } from "@material-ui/core"
+import { Grid, Select, FormControl, MenuItem, InputLabel, Card, TextField, Button, Input } from "@material-ui/core"
+import { api } from "api";
+import { __POSITIONS, __CAREER } from "constants/values";
+import UserCard from "components/UserCard";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    flexGrow: 1,
-    margin: theme.spacing(2),
   },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-    height: 240,
+  formControl: {
+    minWidth: 120,
   },
 }));
 
+
+let loadUrl = 'accounts';
+let loadable = true;
 const Explore = props => {
   const classes = useStyles();
   const [target, setTarget] = useState(null);
-  const [card, setCard] = useState([1]);
+  const [accounts, setAccounts] = useState([]);
+  const [filter, setFilter] = useState({ career: '', position: '' });
+
+  const getAccounts = async () => {
+    if (!loadable) { return }
+    try {
+      const res = await api.get(loadUrl, { params: { size: 18 } });
+      if (res.status === 200) {
+        const results = res.data._embedded.accountResponseDtoList
+        setAccounts(accounts.concat(results))
+        loadable = Boolean(res.data._links.next);
+        if (res.data._links.next) {
+          loadUrl = res.data._links.next.href
+          loadUrl = loadUrl.replace("http", "https")
+        }
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   useEffect(() => {
     let observer;
     if (target) {
-      observer = new IntersectionObserver(onIntersect, {threshold: 0.5});
+      observer = new IntersectionObserver(handleIntersection, { threshold: 0.5 });
       observer.observe(target);
     }
     return () => observer && observer.disconnect();
-  }, [target, card]);
+  }, [target, accounts]);
 
-  const onIntersect = ([entry], observer) => {
-    if (entry.isIntersecting){
-      observer.unobserve(entry.target);
-      setCard(card.concat([1, 1, 1, 1]));
-      observer.observe(entry.target);
+  const handleIntersection = entrys => {
+    const first = entrys[0];
+    if (first.isIntersecting) {
+      getAccounts();
     }
   }
 
+  const filterChange = key => event => {
+    setFilter({ ...filter, [key]: event.target.value })
+    console.log(filter);
+  };
+
   return (
     <div className={classes.root}>
-      <Typography variant="h3">Explore</Typography>
+      <Card elevation={1} style={{margin: 12, padding: 8}}>
+        <FormControl variant="outlined" className={classes.formControl} style={{marginRight: 12}}>
+          <InputLabel id="demo-simple-select-label">직군</InputLabel>
+          <Select
+            labelWidth={40}
+            value={filter.position}
+            onChange={filterChange("position")}
+          >
+            {Object.keys(__POSITIONS).map(key => (
+              <MenuItem value={key}>{__POSITIONS[key]}</MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+        <FormControl variant="outlined" className={classes.formControl} style={{marginRight: 12}}>
+          <InputLabel id="demo-simple-select-label">경력</InputLabel>
+          <Select
+            labelWidth={40}
+            value={filter.career}
+            onChange={filterChange("career")}
+          >
+            {Object.keys(__CAREER).map(key => (
+              <MenuItem value={key}>{__CAREER[key]}</MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+        <FormControl variant="outlined" className={classes.formControl} style={{marginRight: 12}}>
+          <TextField label="검색" variant="outlined" />
+        </FormControl>
+
+        <Button variant="contained" color="primary" style={{marginRight: 12, height: 56}}>검색</Button>
+      </Card>
+      <div style={{ marginTop: 20 }} />
+
       <Grid container spacing={3} xs={12}>
-        {card.map(num => (
-          <Grid item xs={12} md={4}>
-            <Paper className={classes.paper}>card</Paper>
-          </Grid>
-        ))}
+        <UserCard accounts={accounts} {...props} />
       </Grid>
-      <div ref={setTarget}>waiting...</div>
-    </div>
+      <div ref={setTarget} style={{ marginTop: 20 }}>데이터가 없습니다.</div>
+    </div >
   );
 };
 

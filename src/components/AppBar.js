@@ -87,7 +87,7 @@ export default props => {
           }
         >Pickme</Typography>
 
-        <Hidden smDown>
+        <Hidden xsDown>
           <Link style={{ textDecoration: "none", color: "inherit" }} to={PATH_MAIN}>
             <Button color="inherit">Main</Button>
           </Link>
