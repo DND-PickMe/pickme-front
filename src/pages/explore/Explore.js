@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Grid, Paper, Card, Avatar, Chip, CardContent } from "@material-ui/core"
+import { Grid, Select, FormControl, MenuItem, InputLabel, Card, TextField, Button } from "@material-ui/core"
 import { api } from "api";
-import { __POSITIONS } from "constants/values";
+import { __POSITIONS, __CAREER } from "constants/values";
+import UserCard from "components/UserCard";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -15,101 +16,97 @@ const useStyles = makeStyles(theme => ({
     color: theme.palette.text.secondary,
     height: 240,
   },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
 }));
 
 
 const Explore = props => {
   let loadable = true;
-  let isLoading = false;
   let loadUrl = 'accounts';
   const classes = useStyles();
   const [target, setTarget] = useState(null);
-  const [accounts, setAccounts] = useState(null);
+  const [accounts, setAccounts] = useState([]);
+  const [filter, setFilter] = useState({ career: '', position: '' });
 
   const getAccounts = async () => {
-    isLoading = true
-
+    if (!loadable) { return }
     try {
       const res = await api.get(loadUrl);
       if (res.status === 200) {
-        const responseData = res.data._embedded.accountResponseDtoList
-        console.log(accounts);
-        
-        if (accounts === null) {
-          console.log("처음 로딩");
-          setAccounts(responseData)
-        } else {
-          console.log("나중 로딩");
-          setAccounts(accounts.concat(responseData))
-        }
+        const results = res.data._embedded.accountResponseDtoList
+        setAccounts(accounts.concat(results))
+        loadable = Boolean(res.data._links.next);
         if (res.data._links.next) {
-          console.log("more data");
           loadUrl = res.data._links.next.href
           loadUrl = loadUrl.replace("http", "https")
-          loadable = true
-        } else {
-          console.log("no more data");
-          loadable = false
         }
-
-        isLoading = false;
       }
     } catch (err) {
-      loadable = false;
       console.log(err);
     }
   };
 
   useEffect(() => {
-    let observer;
+    const observer = new IntersectionObserver(handleIntersection, { threshold: 0.5 });
     if (target) {
-      observer = new IntersectionObserver(handleIntersection, { threshold: 0.5 });
       observer.observe(target);
     }
-    return () => observer && observer.disconnect();
-  }, [target]);
+  }, [target, accounts]);
 
-  const handleIntersection = async ([entry], observer) => {
-    if (entry.isIntersecting) {
-      observer.unobserve(entry.target);
-      if (loadable && !isLoading) {
-        console.log("load data");
-        await getAccounts();
-      }
-      observer.observe(entry.target);
+
+  const handleIntersection = entrys => {
+    const first = entrys[0];
+    if (first.isIntersecting) {
+      getAccounts();
     }
   }
 
+  const filterChange = key => event => {
+    setFilter({ ...filter, [key]: event.target.value })
+    console.log(filter);
+  };
+
   return (
     <div className={classes.root}>
-      <Grid container spacing={3} xs={12}>
-        {accounts && accounts.map(account => (
-          <Grid item xs={12} md={4} key={account.id}
-            onClick={
-              () => props.history.push(`resume/${account.id}`)
-            }
+      <Card elevation={1}>
+        <FormControl variant="outlined" className={classes.formControl}>
+          <InputLabel id="demo-simple-select-label">직군</InputLabel>
+          <Select
+            value={filter.position}
+            onChange={filterChange("position")}
           >
-            <Card className={classes.card}>
-              <div style={{ display: 'flex', padding: 20 }}>
-                <Avatar style={{ width: 120, height: 120 }} src={account.image}></Avatar>
-                <div style={{ textAlign: 'none', marginLeft: 20 }}>
-                  <Typography variant="h6" style={{ marginBottom: 10 }}>{account.nickName}</Typography>
-                  {account.positions.map(position => {
-                    return (`${__POSITIONS[position]}, `)
-                  })}
-                  <div style={{ marginBottom: 10 }} />
-                  {account.technologies.map(tech => {
-                    return (<Chip style={{ marginRight: 10, marginBottom: 10 }} label={tech.name} />)
-                  })}
-                </div>
-              </div>
-              <CardContent>
-                {account.oneLineIntroduce}
-                <Typography style={{ textAlign: 'right' }} variant="subtitle2">{`조회수 ${account.hits} 좋아요 ${account.favoriteCount}`}</Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-        ))}
+            {Object.keys(__POSITIONS).map(key => (
+              <MenuItem value={key}>{__POSITIONS[key]}</MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+        <FormControl variant="outlined" className={classes.formControl}>
+          <InputLabel id="demo-simple-select-label">경력</InputLabel>
+          <Select
+            value={filter.career}
+            onChange={filterChange("career")}
+          >
+            {Object.keys(__CAREER).map(key => (
+              <MenuItem value={key}>{__CAREER[key]}</MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+        <FormControl variant="outlined" className={classes.formControl}>
+          <TextField label="검색" variant="outlined" />
+        </FormControl>
+
+        <FormControl variant="outlined" className={classes.formControl}>
+          <Button style={{height: "100%"}} variant="outlined">검색</Button>
+        </FormControl>
+      </Card>
+      <div style={{ marginTop: 20 }} />
+      <Grid container spacing={3} xs={12}>
+        <UserCard accounts={accounts} {...props} />
       </Grid>
       <div ref={setTarget} style={{ marginTop: 20 }}>데이터가 없습니다.</div>
     </div>
