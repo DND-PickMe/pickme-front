@@ -87,8 +87,8 @@ const Profile = props => {
     setAccount({ ...account, [key]: event.target.value });
   }
 
-  const deleteInterview = id => {
-    api.delete(`selfInterviews/${id}`).then(res => {
+  const deleteResume = (id, link) => {
+    api.delete(`${link}/${id}`).then(res => {
       if (res.status === 200) {
         Swal.fire({
           title: "삭제 성공",
@@ -96,6 +96,7 @@ const Profile = props => {
           showConfirmButton: false,
           timer: 1500
         })
+        setAccount(res.data.account);
       }
     }
     ).catch(err => {
@@ -196,7 +197,7 @@ const Profile = props => {
                 <Typography variant="subtitle2" style={{ marginBottom: 20 }}>{interview.content}</Typography>
                 <div style={{ display: 'flex', justifyContent: "flex-end" }}>
                   <Button variant="contained" color="primary" style={{ marginRight: 20 }}>수정</Button>
-                  <Button onClick={() => deleteInterview(interview.id)} variant="contained" color="secondary">삭제</Button>
+                  <Button onClick={() => deleteResume(interview.id, "selfInterviews")} variant="contained" color="secondary">삭제</Button>
                 </div>
               </Paper>
             ))}
@@ -211,7 +212,7 @@ const Profile = props => {
                 <Typography variant="subtitle2" style={{ marginBottom: 20 }}>{experience.description}</Typography>
                 <div style={{ display: 'flex', justifyContent: "flex-end" }}>
                   <Button variant="contained" color="primary" style={{ marginRight: 20 }}>수정</Button>
-                  <Button variant="contained" color="secondary">삭제</Button>
+                  <Button onClick={() => deleteResume(experience.id, "experiences")} variant="contained" color="secondary">삭제</Button>
                 </div>
               </Paper>
             ))}
@@ -226,7 +227,7 @@ const Profile = props => {
                 <Typography variant="subtitle2" style={{ marginBottom: 20 }}>{license.description}</Typography>
                 <div style={{ display: 'flex', justifyContent: "flex-end" }}>
                   <Button variant="contained" color="primary" style={{ marginRight: 20 }}>수정</Button>
-                  <Button variant="contained" color="secondary">삭제</Button>
+                  <Button onClick={() => deleteResume(license.id, "licenses")} variant="contained" color="secondary">삭제</Button>
                 </div>
               </Paper>
             ))}
@@ -240,7 +241,7 @@ const Profile = props => {
                 <Typography variant="subtitle2" style={{ marginBottom: 20 }}>{prize.description}</Typography>
                 <div style={{ display: 'flex', justifyContent: "flex-end" }}>
                   <Button variant="contained" color="primary" style={{ marginRight: 20 }}>수정</Button>
-                  <Button variant="contained" color="secondary">삭제</Button>
+                  <Button onClick={() => deleteResume(prize.id, "prizes")} variant="contained" color="secondary">삭제</Button>
                 </div>
               </Paper>
             ))}
@@ -256,7 +257,7 @@ const Profile = props => {
                 <Typography variant="subtitle2" style={{ marginBottom: 20 }}>{project.projectLink}</Typography>
                 <div style={{ display: 'flex', justifyContent: "flex-end" }}>
                   <Button variant="contained" color="primary" style={{ marginRight: 20 }}>수정</Button>
-                  <Button variant="contained" color="secondary">삭제</Button>
+                  <Button onClick={() => deleteResume(project.id, "projects")} variant="contained" color="secondary">삭제</Button>
                 </div>
               </Paper>
             ))}
