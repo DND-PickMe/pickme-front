@@ -14,13 +14,14 @@ const AuthProvider = props => {
       return false;
     }
     try {
-      const res = await  api.get(`/accounts/profile`);
-      if(res.status === 200) {
+      const res = await api.get(`/accounts/profile`);
+      if (res.status === 200) {
         _setUserAuthorized(true);
         _setUser(res.data);
         return true;
       }
     } catch (err) {
+      localStorage.removeItem("token");
       _setUserAuthorized(false);
       return false;
     }
