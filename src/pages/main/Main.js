@@ -7,12 +7,8 @@ import UserCard from "components/UserCard";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    flexGrow: 1,
-    margin: theme.spacing(2),
-  },
-  card: {
-    padding: theme.spacing(2),
-  },
+    padding: theme.spacing(3),
+  }
 }));
 
 const Main = props => {
@@ -48,18 +44,11 @@ const Main = props => {
   };
   return (
     <div className={classes.root}>
+      <Typography variant="h5" style={{ margin: "20px 0px" }}>좋아요 높은 순위</Typography>
+      <UserCard accounts={f_accounts} {...props} />
 
-      <div style={{ marginBottom: 30 }} />
-      <Typography variant="h5" style={{ marginLeft: 12, marginBottom: 30 }}>좋아요 높은 순위</Typography>
-      <Grid container spacing={3} xs={12}>
-        <UserCard accounts={f_accounts} {...props} />
-      </Grid>
-
-      <div style={{ marginBottom: 30 }} />
-      <Typography variant="h5" style={{ marginLeft:12, marginBottom: 30 }}>조회수 높은 순위</Typography>
-      <Grid container spacing={3} xs={12}>
-        <UserCard accounts={h_accounts} {...props} />
-      </Grid>
+      <Typography variant="h5" style={{ margin: "20px 0px" }}>조회수 높은 순위</Typography>
+      <UserCard accounts={h_accounts} {...props} />
     </div>
   );
 };
