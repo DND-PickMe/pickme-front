@@ -7,9 +7,10 @@ import UserCard from "components/UserCard";
 
 const useStyles = makeStyles(theme => ({
   root: {
+    padding: theme.spacing(3),
   },
   formControl: {
-    minWidth: 120,
+    minWidth: 150,
   },
 }));
 
@@ -68,7 +69,7 @@ const Explore = props => {
 
   return (
     <div className={classes.root}>
-      <Card elevation={1} style={{ margin: 12, padding: 8 }}>
+      <Card elevation={1} style={{ padding: 8 }}>
         <FormControl variant="outlined" className={classes.formControl} style={{ marginRight: 12 }}>
           <InputLabel id="demo-simple-select-label">직군</InputLabel>
           <Select
@@ -103,9 +104,7 @@ const Explore = props => {
       </Card>
       <div style={{ marginTop: 20 }} />
 
-      <Grid container spacing={3} xs={12}>
-        <UserCard accounts={accounts} {...props} />
-      </Grid>
+      <UserCard accounts={accounts} {...props} />
       <div ref={setTarget} style={{ margin: 20 }}>데이터가 없습니다.</div>
     </div >
   );

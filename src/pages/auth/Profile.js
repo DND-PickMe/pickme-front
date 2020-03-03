@@ -9,8 +9,7 @@ import { __POSITIONS, __CAREER } from "constants/values";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    marginLeft: theme.spacing(8),
-    marginRight: theme.spacing(8),
+    margin: theme.spacing(3),
   },
   paper: {
     padding: theme.spacing(3),

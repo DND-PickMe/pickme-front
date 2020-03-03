@@ -25,6 +25,7 @@ export default props => {
         value={selectedDate}
         onChange={handleDateChange}
         animateYearScrolling
+        fullWidth={props.fullWidth}
       />
     </MuiPickersUtilsProvider>
   )

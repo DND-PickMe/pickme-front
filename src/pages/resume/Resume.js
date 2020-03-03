@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { api } from "api";
-import { Typography, Card, Avatar, Chip, Paper } from "@material-ui/core";
+import { Typography, Card, Avatar, Chip, Paper, Button } from "@material-ui/core";
 import { __POSITIONS } from "constants/values";
 
 const Resume = (props) => {
@@ -77,6 +77,7 @@ const Resume = (props) => {
               <Typography variant="subtitle2" style={{ marginBottom: 20 }}>{project.projectLink}</Typography>
             </Paper>
           ))}
+        <Button variant="contained" color="primary">종아요</Button>
         </Card>
       }
     </div>

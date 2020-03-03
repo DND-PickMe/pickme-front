@@ -9,7 +9,7 @@ const useStyles = makeStyles(theme => ({
 const UserCard = props => {
   const classes = useStyles();
   return (
-    <Grid container spacing={3}>
+    <Grid container spacing={2}>
       {props.accounts && props.accounts.map(account => (
         <Grid item xs={12} md={4} key={account.id}
           onClick={
