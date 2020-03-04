@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { api } from "api";
-import { Typography, Card, Avatar, Chip, Paper, Button } from "@material-ui/core";
+import { Typography, Card, Avatar, Chip, Paper, Button, IconButton } from "@material-ui/core";
 import { __POSITIONS } from "constants/values";
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
+import VisibilityIcon from '@material-ui/icons/Visibility';
 
 const Resume = (props) => {
   const [account, setAccount] = useState(null);
@@ -12,6 +15,16 @@ const Resume = (props) => {
 
   const getResume = () => {
     api.get(`accounts/${props.match.params.id}`).then(res => {
+      if (res.status === 200) {
+        setAccount(res.data);
+      }
+    }).catch(err => {
+      console.log(err);
+    })
+  }
+
+  const handleFavorite = () => {
+    api.post(`accounts/${account.id}/favorite`).then(res => {
       setAccount(res.data);
     }).catch(err => {
       console.log(err);
@@ -77,7 +90,25 @@ const Resume = (props) => {
               <Typography variant="subtitle2" style={{ marginBottom: 20 }}>{project.projectLink}</Typography>
             </Paper>
           ))}
-        <Button variant="contained" color="primary">종아요</Button>
+
+          <div style={{ display: "flex", justifyContent: "flex-end" }}>
+            <div>
+              <IconButton>
+                <VisibilityIcon></VisibilityIcon>
+              </IconButton>
+              {`조회수 ${account.hits} 회`}
+            </div>
+            <div>
+              <IconButton>
+                {account.favoriteFlag?
+                <FavoriteIcon style={{color: '#E1306C'}} onClick={handleFavorite} ></FavoriteIcon>
+                :
+                <FavoriteBorder onClick={handleFavorite} ></FavoriteBorder>
+                }
+              </IconButton>
+              {`좋아요 ${account.favoriteCount} 개`}
+            </div>
+          </div>
         </Card>
       }
     </div>
