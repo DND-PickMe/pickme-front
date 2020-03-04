@@ -1,5 +1,5 @@
 export const __POSITIONS = {
-  SERVER: "서버/백앤드",
+  SERVER: "서버/백앤드", 
   WEB_FRONT: "프론트엔드",
   FULL_STACK: "웹 풀스택",
   ANDROID: "안드로이드",
@@ -20,7 +20,6 @@ export const __POSITIONS = {
 }
 
 export const __CAREER = {
-  ALL: "전체",
   NEW: "신입",
   FIRST_YEAR: "1년차",
   SECOND_YEAR: "2년차",

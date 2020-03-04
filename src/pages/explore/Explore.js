@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Select, FormControl, MenuItem, InputLabel, Card, TextField, Button, Grid } from "@material-ui/core"
 import { api } from "api";
@@ -24,29 +24,19 @@ const Explore = props => {
   const [accounts, setAccounts] = useState([]);
   const [filter, setFilter] = useState({});
   const [suggestions, SetSuggestions] = useState([]);
+  const [nickname, setNickname] = useState("");
+
 
   const getAccounts = async () => {
     if (!loadable) { return }
     try {
-      if (filter.positions || filter.career) {
-        const res = await api.get(loadUrl, { params: { ...filter, size: 18 } });
-        if (res.status === 200) {
-          const results = res.data._embedded.accountResponseDtoList
-          setAccounts(results)
-          loadable = Boolean(res.data._links.next);
-          if (res.data._links.next) {
-            loadUrl = res.data._links.next.href
-          }
-        }
-      } else {
-        const res = await api.get(loadUrl, { params: { size: 18 } });
-        if (res.status === 200) {
-          const results = res.data._embedded.accountResponseDtoList
-          setAccounts(accounts.concat(results))
-          loadable = Boolean(res.data._links.next);
-          if (res.data._links.next) {
-            loadUrl = res.data._links.next.href
-          }
+      const res = await api.get(loadUrl, { params: { ...filter, size: 18 } });
+      if (res.status === 200) {
+        const results = res.data._embedded.accountResponseDtoList
+        setAccounts(accounts.concat(results))
+        loadable = Boolean(res.data._links.next);
+        if (loadable) {
+          loadUrl = res.data._links.next.href
         }
       }
     } catch (err) {
@@ -57,17 +47,17 @@ const Explore = props => {
   useEffect(() => {
     let observer;
     if (target) {
-      observer = new IntersectionObserver(handleIntersection, { threshold: 0.5 });
+      observer = new IntersectionObserver(handleIntersection, { threshold: 0.1 });
       observer.observe(target);
     }
     return () => observer && observer.disconnect();
   }, [target, accounts]);
 
   useEffect(() => {
-    loadUrl = 'accounts/filter';
+    loadUrl = 'accounts';
     loadable = true;
+    setAccounts([]);
     getSuggestions();
-    getAccounts();
   }, [filter])
 
   const getSuggestions = () => {
@@ -87,13 +77,17 @@ const Explore = props => {
 
   const filterChange = key => event => {
     setFilter({ ...filter, [key]: event.target.value })
-    console.log(filter);
+    console.log({ ...filter, [key]: event.target.value });
   };
+
+  const filterTech = value => {
+    setFilter({ ...filter, technology: value ? value.name : "" });
+  }
 
   return (
     <div className={classes.root}>
       <Grid container spacing={2}>
-        <Grid item xs={12} md={2}>
+        <Grid item xs={6} md={2}>
           <FormControl
             fullWidth
             variant="outlined"
@@ -104,7 +98,9 @@ const Explore = props => {
               labelWidth={40}
               value={filter.position}
               onChange={filterChange("positions")}
+              defaultValue=""
             >
+              <MenuItem value="">전체</MenuItem>
               {Object.keys(__POSITIONS).map(key => (
                 <MenuItem value={key}>{__POSITIONS[key]}</MenuItem>
               ))}
@@ -112,7 +108,7 @@ const Explore = props => {
           </FormControl>
         </Grid>
 
-        <Grid item xs={12} md={2}>
+        <Grid item xs={6} md={2}>
           <FormControl
             fullWidth
             variant="outlined"
@@ -122,7 +118,9 @@ const Explore = props => {
               labelWidth={40}
               value={filter.career}
               onChange={filterChange("career")}
+              defaultValue=""
             >
+              <MenuItem value="">전체</MenuItem>
               {Object.keys(__CAREER).map(key => (
                 <MenuItem value={key}>{__CAREER[key]}</MenuItem>
               ))}
@@ -130,13 +128,30 @@ const Explore = props => {
           </FormControl>
         </Grid>
 
-        <Grid item xs={12} md={2}>
+        <Grid item xs={6} md={2}>
           <Autocomplete
             options={suggestions}
             getOptionLabel={suggestion => suggestion.name}
             renderInput={params => <TextField {...params} label="기술" variant="outlined" />}
-          // onChange={(e, v) => setFilter({ ...filter, technologies: v.name })}
+            onChange={(e, v) => filterTech(v)}
           />
+        </Grid>
+
+        <Grid item xs={6} md={2}>
+          <TextField
+            variant="outlined"
+            label="이름"
+            onChange={e => setNickname(e.target.value)}
+            fullWidth>
+          </TextField>
+        </Grid>
+
+        <Grid item xs={6} md={2}>
+          <Button
+            onClick={() => setFilter({ ...filter, nickName: nickname })}
+            variant="contained"
+            style={{ height: 56 }}
+            color="primary">검색</Button>
         </Grid>
       </Grid>
       <div style={{ marginTop: 20 }} />
