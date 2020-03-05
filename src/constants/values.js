@@ -1,5 +1,5 @@
 export const __POSITIONS = {
-  SERVER: "서버/백앤드", 
+  SERVER: "서버/백앤드",
   WEB_FRONT: "프론트엔드",
   FULL_STACK: "웹 풀스택",
   ANDROID: "안드로이드",
@@ -27,4 +27,15 @@ export const __CAREER = {
   FOURTH_YEAR: "4년차",
   FIFTH_YEAR: "5년차",
   OVER_FIFTH_YEAR: "5년차 이상",
+}
+
+export const __LOCATION = {
+  SEOUL: "서울특별시",
+  BUSAN: "부산광역시",
+  DAEJEON: "대전광역시",
+  INCHEON: "인천광역시",
+  GWANGJU: "광주광역시",
+  DAEGU: "대구광역시",
+  ULSAN: "울산광역시",
+  SEJONG: "세종특별자치시"
 }

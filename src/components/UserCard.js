@@ -21,9 +21,7 @@ const UserCard = props => {
               <Avatar style={{ width: 120, height: 120 }} src={account.image}></Avatar>
               <div style={{ textAlign: 'none', marginLeft: 20 }}>
                 <Typography variant="h6" style={{ marginBottom: 10 }}>{account.nickName}</Typography>
-                {account.positions.map(position => {
-                  return (`${__POSITIONS[position]}, `)
-                })}
+                {account.positions.map(position => __POSITIONS[position]).join(', ')}
                 <div style={{ marginBottom: 10 }} />
                 {account.technologies.map(tech => {
                   return (<Chip style={{ marginRight: 10, marginBottom: 10 }} label={tech.name} />)
