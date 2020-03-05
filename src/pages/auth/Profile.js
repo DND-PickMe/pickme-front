@@ -22,6 +22,7 @@ const Profile = props => {
   const [account, setAccount] = useState(null);
   const [suggestions, SetSuggestions] = useState([]);
   const [technologies, setTechNologies] = useState([]);
+  const [file, setFile] = useState(null);
 
   useEffect(() => {
     getProfile();
@@ -52,8 +53,6 @@ const Profile = props => {
   }
 
   const onAdditionTech = tag => {
-    console.log("Here", tag);
-
     setTechNologies(technologies.concat(tag));
   }
 
@@ -69,7 +68,7 @@ const Profile = props => {
       technologies: technologies
     }
     console.log(data);
-    
+
 
     api.put(`accounts/${account.id}`, data).then(res => {
       Swal.fire({
@@ -115,6 +114,15 @@ const Profile = props => {
     }
   }
 
+  const handleUpload = event => {
+    const data = new FormData();
+    data.append("image", event.target.files[0])
+    
+    api.post("images", data)
+    .then(response => console.log(response))
+    .catch(errors => console.log(errors));
+  }
+
   return (
     <div className={classes.root}>
       {account &&
@@ -122,6 +130,10 @@ const Profile = props => {
           <div style={{ marginBottom: 20 }} />
           <Paper className={classes.paper} elevation={3}>
             <Typography variant="h6" style={{ marginBottom: 20 }}>기타 정보</Typography>
+
+            {/* <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+              <input type="file" onChange={handleUpload} />
+            </div> */}
 
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               <Avatar src={account.image} style={{ alignSelf: 'center', width: 180, height: 180 }}></Avatar>
@@ -137,7 +149,7 @@ const Profile = props => {
             <div style={{ marginBottom: 20 }} />
             <TextField
               onChange={handleModify("socialLink")}
-              value={account.socialLink||""}
+              value={account.socialLink || ""}
               InputLabelProps={{ shrink: true }}
               fullWidth label="소셜링크"
               variant="outlined" />

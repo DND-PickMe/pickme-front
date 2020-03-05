@@ -1,7 +1,7 @@
 import { AppBar, Toolbar, Typography, IconButton, Button, Hidden, Drawer, List, ListItem, ListItemText } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles";
 import React, { useContext, useState, useEffect } from "react";
-import { PATH_AUTH_CHECK, PATH_SIGN_IN, PATH_SIGN_UP, PATH_USER_PROFILE, PATH_ADD_RESUME, PATH_WELCOME, PATH_MAIN, PATH_EXPLORE, PATH_ENTERPRISE } from "../route/paths";
+import { PATH_AUTH_CHECK, PATH_SIGN_IN, PATH_SIGN_UP, PATH_USER_PROFILE, PATH_ADD_RESUME, PATH_WELCOME, PATH_MAIN, PATH_EXPLORE, PATH_ENTERPRISES } from "../route/paths";
 import { Link } from "react-router-dom";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -64,7 +64,7 @@ export default props => {
                 <ListItemText primary={"Explore"} />
               </ListItem>
             </Link>
-            <Link style={{ textDecoration: "none", color: "inherit" }} to={PATH_ENTERPRISE}>
+            <Link style={{ textDecoration: "none", color: "inherit" }} to={PATH_ENTERPRISES}>
               <ListItem button>
                 <ListItemText primary={"Enterprise"} />
               </ListItem>
@@ -88,7 +88,7 @@ export default props => {
           <Link style={{ textDecoration: "none", color: "inherit" }} to={PATH_EXPLORE}>
             <Button color="inherit">Explore</Button>
           </Link>
-          <Link style={{ textDecoration: "none", color: "inherit", marginRight: 50 }} to={PATH_ENTERPRISE}>
+          <Link style={{ textDecoration: "none", color: "inherit", marginRight: 50 }} to={PATH_ENTERPRISES}>
             <Button color="inherit">Enterprise</Button>
           </Link>
         </Hidden>

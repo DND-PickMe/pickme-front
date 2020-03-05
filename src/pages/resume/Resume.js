@@ -5,6 +5,8 @@ import { __POSITIONS } from "constants/values";
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 import VisibilityIcon from '@material-ui/icons/Visibility';
+import { AuthConsumer } from "context/AuthContext";
+import Swal from "sweetalert2";
 
 const Resume = (props) => {
   const [account, setAccount] = useState(null);
@@ -91,6 +93,42 @@ const Resume = (props) => {
             </Paper>
           ))}
 
+          <AuthConsumer>
+            {auth =>
+              <Button
+                color="primary"
+                variant="contained"
+                onClick={() => {
+                  if (auth.state.user.userRole === "USER") {
+                    Swal.fire({
+                      icon: 'error',
+                      title: '권한이 없습니다!',
+                      text: '일반 사용자는 제안하기를 할 수 없습니다.'
+                    })
+                  } else {
+                    api.get(`suggestion?accountId=${account.id}`).
+                    then(res => {
+                      Swal.fire({
+                        icon: 'success',
+                        title: '제안 성공!',
+                        text: '구직자에게 채용 제안 이메일을 전송했습니다.',
+                        showConfirmButton: false,
+                        timer: 1500
+                      })
+                    }).catch(err => {
+                      Swal.fire({
+                        icon: 'error',
+                        title: '서버에 문제가 있습니다.',
+                        text: '잠시 후 다시 시도해 주세요.',
+                        showConfirmButton: false,
+                        timer: 1500
+                      })
+                    })
+                  }
+                }}>제안 하기</Button>
+            }
+          </AuthConsumer>
+
           <div style={{ display: "flex", justifyContent: "flex-end" }}>
             <div>
               <IconButton>
@@ -100,10 +138,10 @@ const Resume = (props) => {
             </div>
             <div>
               <IconButton>
-                {account.favoriteFlag?
-                <FavoriteIcon style={{color: '#E1306C'}} onClick={handleFavorite} ></FavoriteIcon>
-                :
-                <FavoriteBorder onClick={handleFavorite} ></FavoriteBorder>
+                {account.favoriteFlag ?
+                  <FavoriteIcon style={{ color: '#E1306C' }} onClick={handleFavorite} ></FavoriteIcon>
+                  :
+                  <FavoriteBorder onClick={handleFavorite} ></FavoriteBorder>
                 }
               </IconButton>
               {`좋아요 ${account.favoriteCount} 개`}
