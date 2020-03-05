@@ -43,7 +43,7 @@ export default props => {
 
 
   return (
-    <AppBar position="static">
+    <AppBar position="fixed">
       <Toolbar>
         <Hidden smUp>
           <IconButton onClick={e => toggleDrawer(true)} className={classes.menuButton} edge="start" color="inherit" aria-label="menu">

@@ -20,36 +20,34 @@ import AppBar from "./components/AppBar";
 import Resume from "pages/resume/Resume";
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1,
-  },
+  toolbar: theme.mixins.toolbar,
 }));
 
 const App = props => {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
-      <AuthProvider>
-        <AppBar {...props}></AppBar>
-        <Switch>
-          <Route path={PATH_AUTH_CHECK} component={AuthCheck} />
-          <Route path={PATH_SIGN_IN} component={SignIn} />
-          <Route path={PATH_SIGN_IN} component={SignIn} />
-          <Route path={PATH_SIGN_UP} component={SignUp} />
+    <AuthProvider>
+      <AppBar {...props}></AppBar>
 
-          <Route path={PATH_MAIN} component={Main} />
-          <Route path={PATH_EXPLORE} component={Explore} />
-          <Route path={PATH_ENTERPRISE} component={Enterprise} />
+      <div className={classes.toolbar} />
+      <Switch>
+        <Route path={PATH_AUTH_CHECK} component={AuthCheck} />
+        <Route path={PATH_SIGN_IN} component={SignIn} />
+        <Route path={PATH_SIGN_IN} component={SignIn} />
+        <Route path={PATH_SIGN_UP} component={SignUp} />
 
-          <PrivateRoute path={PATH_USER_PROFILE} component={Profile} />
-          <PrivateRoute path={PATH_ADD_RESUME} component={AddResume} />
-          <PrivateRoute path={PATH_RESUME} component={Resume} />
+        <Route path={PATH_MAIN} component={Main} />
+        <Route path={PATH_EXPLORE} component={Explore} />
+        <Route path={PATH_ENTERPRISE} component={Enterprise} />
 
-          <Route path={PATH_WELCOME} component={Welcome} />
-        </Switch>
-      </AuthProvider>
-    </div>
+        <PrivateRoute path={PATH_USER_PROFILE} component={Profile} />
+        <PrivateRoute path={PATH_ADD_RESUME} component={AddResume} />
+        <PrivateRoute path={PATH_RESUME} component={Resume} />
+
+        <Route path={PATH_WELCOME} component={Welcome} />
+      </Switch>
+    </AuthProvider>
   );
 };
 
