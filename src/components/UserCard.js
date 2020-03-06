@@ -4,6 +4,9 @@ import { Grid, Avatar, Typography, Chip, CardContent, Card } from "@material-ui/
 import { __POSITIONS, __CAREER } from "constants/values";
 
 const useStyles = makeStyles(theme => ({
+  cardTech: {
+    minHeight: 180,
+  }
 }));
 
 const UserCard = props => {
@@ -19,7 +22,7 @@ const UserCard = props => {
           <Card className={classes.card}>
             <div style={{ display: 'flex', padding: 20 }}>
               <Avatar style={{ width: 120, height: 120 }} src={account.image}></Avatar>
-              <div style={{ textAlign: 'none', marginLeft: 20 }}>
+              <div className={classes.cardTech} style={{ textAlign: 'none', marginLeft: 20 }}>
                 <Typography variant="h6" style={{ marginBottom: 10 }}>{account.nickName}</Typography>
                 {account.positions.map(position => __POSITIONS[position]).join(', ')}
                 <div style={{ marginBottom: 10 }} />
@@ -29,8 +32,7 @@ const UserCard = props => {
               </div>
             </div>
             <CardContent>
-              <Typography variant="subtitle2">{__CAREER[account.career]}</Typography>
-              {account.oneLineIntroduce}
+              <Typography variant="subtitle2">{account.career?__CAREER[account.career]:'미지정'}</Typography>
               <Typography style={{ textAlign: 'right' }} variant="subtitle2">{`조회수 ${account.hits} 좋아요 ${account.favoriteCount}`}</Typography>
             </CardContent>
           </Card>

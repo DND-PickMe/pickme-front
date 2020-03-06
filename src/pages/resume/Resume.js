@@ -7,6 +7,11 @@ import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import { AuthConsumer } from "context/AuthContext";
 import Swal from "sweetalert2";
+import InterviewStepper from "components/stepper/InterviewStepper";
+import ExperienceStepper from "components/stepper/ExperienceStepper";
+import LicenseStepper from "components/stepper/LicenseStepper";
+import ProjectStepper from "components/stepper/ProjectStepper";
+import PrizeStepper from "components/stepper/PrizeStepper";
 
 const Resume = (props) => {
   const [account, setAccount] = useState(null);
@@ -34,64 +39,53 @@ const Resume = (props) => {
   }
 
   return (
-    <div>
+    <div style={{ textAlign: "center" }}>
       {account &&
         <Card elevation={1} style={{ margin: 12, padding: 30 }}>
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <Avatar
+              style={{ width: 200, height: 200 }}
+              src={account.image} />
+          </div>
           <Typography variant="h4">{account.nickName}</Typography>
-          <Avatar src={account.image}></Avatar>
-          {account.positions.map(position => {
-            return (`${__POSITIONS[position]}, `)
-          })}
+          {account.positions.map(position => __POSITIONS[position]).join(', ')}
+          <Typography
+            style={{ padding: 30 }}
+            variant="h4">{account.oneLineIntroduce}</Typography>
           <div style={{ marginBottom: 10 }} />
           {account.technologies.map(tech => {
             return (<Chip style={{ marginRight: 10, marginBottom: 10 }} label={tech.name} />)
           })}
-          <Typography variant="h4">{account.socialLink}</Typography>
-          <Typography variant="h4">{account.oneLineIntroduce}</Typography>
+          <a href={account.socialLink}><p>{account.socialLink}</p></a>
 
-          <Typography variant="h6" style={{ marginBottom: 20 }}>셀프 인터뷰</Typography>
-          {account.selfInterviews.map(interview => (
-            <Paper elevation={3} key={interview.id} style={{ padding: 20, marginBottom: 20 }}>
-              <Typography variant="subtitle1" style={{ marginBottom: 20 }}>{interview.title}</Typography>
-              <Typography variant="subtitle2" style={{ marginBottom: 20 }}>{interview.content}</Typography>
-            </Paper>
-          ))}
+          <div style={{ textAlign: 'left' }} >
 
-          <Typography variant="h6" style={{ marginBottom: 20 }}>경력사항</Typography>
-          {account.experiences.map(experience => (
-            <Paper elevation={3} key={experience.id} style={{ padding: 20, marginBottom: 20 }}>
-              <Typography variant="subtitle1" style={{ marginBottom: 20 }}>{experience.companyName}</Typography>
-              <Typography variant="subtitle2" style={{ marginBottom: 20 }}>{experience.position}</Typography>
-              <Typography variant="subtitle2" style={{ marginBottom: 20 }}>{experience.description}</Typography>
+            <Paper elevation={3} style={{ padding: 30 }}>
+              <Typography variant="h6" style={{ marginBottom: 20 }}>셀프인터뷰</Typography>
+              <InterviewStepper items={account.selfInterviews} />
             </Paper>
-          ))}
 
-          <Typography variant="h6" style={{ marginBottom: 20 }}>자격증</Typography>
-          {account.licenses.map(license => (
-            <Paper elevation={3} key={license.id} style={{ padding: 20, marginBottom: 20 }}>
-              <Typography variant="subtitle1" style={{ marginBottom: 20 }}>{license.name}</Typography>
-              <Typography variant="subtitle2" style={{ marginBottom: 20 }}>{license.institution}</Typography>
-              <Typography variant="subtitle2" style={{ marginBottom: 20 }}>{license.description}</Typography>
+            <Paper elevation={3} style={{ padding: 30 }}>
+              <Typography variant="h6" style={{ marginBottom: 20 }}>경력</Typography>
+              <ExperienceStepper items={account.experiences} />
             </Paper>
-          ))}
 
-          <Typography variant="h6" style={{ marginBottom: 20 }}>수상내역</Typography>
-          {account.prizes.map(prize => (
-            <Paper elevation={3} key={prize.id} style={{ padding: 20, marginBottom: 20 }}>
-              <Typography variant="subtitle1" style={{ marginBottom: 20 }}>{prize.name}</Typography>
-              <Typography variant="subtitle2" style={{ marginBottom: 20 }}>{prize.description}</Typography>
+            <Paper elevation={3} style={{ padding: 30 }}>
+              <Typography variant="h6" style={{ marginBottom: 20 }}>자격증</Typography>
+              <LicenseStepper items={account.licenses} />
             </Paper>
-          ))}
 
-          <Typography variant="h6" style={{ marginBottom: 20 }}>프로젝트</Typography>
-          {account.projects.map(project => (
-            <Paper elevation={3} key={project.id} style={{ padding: 20, marginBottom: 20 }}>
-              <Typography variant="subtitle1" style={{ marginBottom: 20 }}>{project.name}</Typography>
-              <Typography variant="subtitle2" style={{ marginBottom: 20 }}>{project.role}</Typography>
-              <Typography variant="subtitle2" style={{ marginBottom: 20 }}>{project.description}</Typography>
-              <Typography variant="subtitle2" style={{ marginBottom: 20 }}>{project.projectLink}</Typography>
+            <Paper elevation={3} style={{ padding: 30 }}>
+              <Typography variant="h6" style={{ marginBottom: 20 }}>수상내역</Typography>
+              <PrizeStepper items={account.prizes} />
             </Paper>
-          ))}
+
+            <Paper elevation={3} style={{ padding: 30 }}>
+              <Typography variant="h6" style={{ marginBottom: 20 }}>프로젝트</Typography>
+              <ProjectStepper items={account.projects} />
+            </Paper>
+
+          </div>
 
           <AuthConsumer>
             {auth =>
@@ -107,23 +101,23 @@ const Resume = (props) => {
                     })
                   } else {
                     api.get(`enterprises/suggestion?accountId=${account.id}`).
-                    then(res => {
-                      Swal.fire({
-                        icon: 'success',
-                        title: '제안 성공!',
-                        text: '구직자에게 채용 제안 이메일을 전송했습니다.',
-                        showConfirmButton: false,
-                        timer: 1500
+                      then(res => {
+                        Swal.fire({
+                          icon: 'success',
+                          title: '제안 성공!',
+                          text: '구직자에게 채용 제안 이메일을 전송했습니다.',
+                          showConfirmButton: false,
+                          timer: 1500
+                        })
+                      }).catch(err => {
+                        Swal.fire({
+                          icon: 'error',
+                          title: '서버에 문제가 있습니다.',
+                          text: '잠시 후 다시 시도해 주세요.',
+                          showConfirmButton: false,
+                          timer: 1500
+                        })
                       })
-                    }).catch(err => {
-                      Swal.fire({
-                        icon: 'error',
-                        title: '서버에 문제가 있습니다.',
-                        text: '잠시 후 다시 시도해 주세요.',
-                        showConfirmButton: false,
-                        timer: 1500
-                      })
-                    })
                   }
                 }}>제안 하기</Button>
             }

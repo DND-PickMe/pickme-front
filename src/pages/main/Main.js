@@ -4,6 +4,7 @@ import { Grid, Typography } from "@material-ui/core";
 import { api } from "api";
 import { __POSITIONS } from "constants/values";
 import UserCard from "components/UserCard";
+import Skeleton from '@material-ui/lab/Skeleton';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -44,11 +45,32 @@ const Main = props => {
   };
   return (
     <div className={classes.root}>
-      <Typography variant="h5" style={{ margin: "20px 0px" }}>좋아요 높은 순위</Typography>
-      <UserCard accounts={f_accounts} {...props} />
+      <Typography variant="h5" style={{ margin: "20px 0px" }}>좋아요 순위</Typography>
+      {f_accounts ?
+        <UserCard accounts={f_accounts} {...props} />
+        :
+        <Grid container spacing={2}>
+          {[360, 350, 345, 360, 350, 360, 345].map((h, i) =>
+            <Grid item xs={12} md={4} key={i}>
+              <Skeleton animation="wave" style={{ height: h }} />
+            </Grid>
+          )}
+        </Grid>
 
-      <Typography variant="h5" style={{ margin: "20px 0px" }}>조회수 높은 순위</Typography>
-      <UserCard accounts={h_accounts} {...props} />
+      }
+
+      <Typography variant="h5" style={{ margin: "20px 0px" }}>조회수 순위</Typography>
+      {h_accounts ?
+        <UserCard accounts={h_accounts} {...props} />
+        :
+        <Grid container spacing={2}>
+          {[360, 350, 345, 360, 350, 360, 345].map((h, i) =>
+            <Grid item xs={12} md={4} key={i}>
+              <Skeleton animation="wave" style={{ height: h }} />
+            </Grid>
+          )}
+        </Grid>
+      }
     </div>
   );
 };

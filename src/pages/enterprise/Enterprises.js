@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Card, Grid, TextField, Button } from "@material-ui/core";
 import { api } from "api";
+import Skeleton from "@material-ui/lab/Skeleton";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -11,13 +12,13 @@ const useStyles = makeStyles(theme => ({
 
 
 let loadUrl = 'enterprises';
-let loadable = true;
 const Enterprises = props => {
   const classes = useStyles();
   const [target, setTarget] = useState(null);
   const [enterprises, setEnterprises] = useState([]);
   const [filter, setFilter] = useState({});
   const [inputs, setInputs] = useState({});
+  const [loadable, setLoadable] = useState(true);
 
   const getEnterprise = async () => {
     if (!loadable) { return }
@@ -26,7 +27,7 @@ const Enterprises = props => {
       if (res.status === 200) {
         const results = res.data._embedded.enterpriseResponseDtoList
         setEnterprises(enterprises.concat(results))
-        loadable = Boolean(res.data._links.next);
+        setLoadable(Boolean(res.data._links.next));
         if (loadable) {
           loadUrl = res.data._links.next.href
         }
@@ -47,7 +48,7 @@ const Enterprises = props => {
 
   useEffect(() => {
     loadUrl = 'enterprises';
-    loadable = true;
+    setLoadable(true);
     setEnterprises([]);
   }, [filter])
 
@@ -102,7 +103,19 @@ const Enterprises = props => {
           </Grid>
         )}
       </Grid>
-      <div ref={setTarget} style={{ margin: 20 }}>데이터가 없습니다.</div>
+
+      {loadable ?
+        <Grid ref={setTarget} container spacing={2}>
+          {[140, 140, 140, 140, 140, 140, 140].map((h, i) =>
+            <Grid item xs={12} key={i}>
+              <Skeleton animation="wave" style={{ height: h }} />
+            </Grid>
+          )}
+        </Grid>
+        :
+        <div ref={setTarget} style={{ margin: 20 }}>데이터가 없습니다.</div>
+      }
+
     </div >
   );
 };
