@@ -135,7 +135,7 @@ const SignUp = props => {
                 variant="contained"
                 color="primary"
                 onClick={() => {
-                  api.post("api/accounts/sendCode", { email: userInputs.email }).then(res => {
+                  api.post("accounts/sendCode", { email: userInputs.email }).then(res => {
                     alert("해당 이메일로 인증번호가 전송되었습니다.")
                     setVisiable(true)
                   }).catch(err => {
@@ -145,9 +145,9 @@ const SignUp = props => {
                 }>인증 코드 전송</Button>
             </div>
             <div style={{ marginBottom: 20 }} />
-            <div style={{ display: 'flex' }}>
-              {visiable &&
-                <>
+            {visiable &&
+              <>
+                <div style={{ display: 'flex' }}>
                   <TextField
                     style={{ flex: 10 }}
                     onChange={e => setValidCode(e.target.value)}
@@ -157,8 +157,7 @@ const SignUp = props => {
                     variant="contained"
                     color="primary"
                     onClick={() => {
-
-                      api.code("api/accounts/matchCode", { email: userInputs.email, code: vaildCode })
+                      api.put("accounts/matchCode", { email: userInputs.email, code: vaildCode })
                         .then(res => {
                           Swal.fire({
                             icon: 'success',
@@ -179,10 +178,10 @@ const SignUp = props => {
                         })
                     }}
                   > 인증</Button>
-                  <div style={{ marginBottom: 20 }} />
-                </>
-              }
-            </div>
+                </div>
+                <div style={{ marginBottom: 20 }} />
+              </>
+            }
             <PasswordInput label="비밀번호" onChange={userChange("password")} />
             <div style={{ marginBottom: 20 }} />
             <PasswordInput label="비밀번호 확인" labelWidth={100} onChange={userChange("passwordConfirm")} />

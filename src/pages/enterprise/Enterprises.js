@@ -25,8 +25,8 @@ const Enterprises = props => {
     try {
       const res = await api.get(loadUrl, { params: filter });
       if (res.status === 200) {
-        const results = res.data._embedded.enterpriseResponseDtoList
-        setEnterprises(enterprises.concat(results))
+        const results = res.data._embedded
+        setEnterprises(results?enterprises.concat(results.enterpriseResponseDtoList):[])
         setLoadable(Boolean(res.data._links.next));
         if (loadable) {
           loadUrl = res.data._links.next.href

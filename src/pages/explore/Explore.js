@@ -33,12 +33,12 @@ const Explore = props => {
     try {
       const res = await api.get(loadUrl, { params: { ...filter, size: 12 } });
       if (res.status === 200) {
-        const results = res.data._embedded.accountResponseDtoList
-        setAccounts(accounts.concat(results))
-        setLoadable(Boolean(res.data._links.next));
-        if (loadable) {
-          loadUrl = res.data._links.next.href
-        }
+        const results = res.data._embedded
+        setAccounts(results ? accounts.concat(results.accountResponseDtoList) : [])
+      }
+      setLoadable(Boolean(res.data._links.next));
+      if (loadable) {
+        loadUrl = res.data._links.next.href
       }
     } catch (err) {
       console.log(err);
