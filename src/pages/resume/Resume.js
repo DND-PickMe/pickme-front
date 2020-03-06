@@ -106,7 +106,7 @@ const Resume = (props) => {
                       text: '일반 사용자는 제안하기를 할 수 없습니다.'
                     })
                   } else {
-                    api.get(`suggestion?accountId=${account.id}`).
+                    api.get(`enterprises/suggestion?accountId=${account.id}`).
                     then(res => {
                       Swal.fire({
                         icon: 'success',
