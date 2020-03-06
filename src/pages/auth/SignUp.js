@@ -135,7 +135,7 @@ const SignUp = props => {
                 variant="contained"
                 color="primary"
                 onClick={() => {
-                  api.post("api/accounts/sendCode", { email: userInputs.email }).then(res => {
+                  api.post("accounts/sendCode", { email: userInputs.email }).then(res => {
                     alert("해당 이메일로 인증번호가 전송되었습니다.")
                     setVisiable(true)
                   }).catch(err => {
@@ -158,7 +158,7 @@ const SignUp = props => {
                     color="primary"
                     onClick={() => {
 
-                      api.code("api/accounts/matchCode", { email: userInputs.email, code: vaildCode })
+                      api.code("accounts/matchCode", { email: userInputs.email, code: vaildCode })
                         .then(res => {
                           Swal.fire({
                             icon: 'success',
