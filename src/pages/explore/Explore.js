@@ -5,6 +5,7 @@ import { api } from "api";
 import { __POSITIONS, __CAREER } from "constants/values";
 import UserCard from "components/UserCard";
 import Autocomplete from "@material-ui/lab/Autocomplete";
+import Skeleton from '@material-ui/lab/Skeleton';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -17,7 +18,6 @@ const useStyles = makeStyles(theme => ({
 
 
 let loadUrl = 'accounts';
-let loadable = true;
 const Explore = props => {
   const classes = useStyles();
   const [target, setTarget] = useState(null);
@@ -25,16 +25,17 @@ const Explore = props => {
   const [filter, setFilter] = useState({});
   const [suggestions, SetSuggestions] = useState([]);
   const [nickname, setNickname] = useState("");
+  const [loadable, setLoadable] = useState(true);
 
 
   const getAccounts = async () => {
     if (!loadable) { return }
     try {
-      const res = await api.get(loadUrl, { params: { ...filter, size: 18 } });
+      const res = await api.get(loadUrl, { params: { ...filter, size: 12 } });
       if (res.status === 200) {
         const results = res.data._embedded.accountResponseDtoList
         setAccounts(accounts.concat(results))
-        loadable = Boolean(res.data._links.next);
+        setLoadable(Boolean(res.data._links.next));
         if (loadable) {
           loadUrl = res.data._links.next.href
         }
@@ -55,7 +56,7 @@ const Explore = props => {
 
   useEffect(() => {
     loadUrl = 'accounts';
-    loadable = true;
+    setLoadable(true);
     setAccounts([]);
     getSuggestions();
   }, [filter])
@@ -157,7 +158,19 @@ const Explore = props => {
       <div style={{ marginTop: 20 }} />
 
       <UserCard accounts={accounts} {...props} />
-      <div ref={setTarget} style={{ margin: 20 }}>데이터가 없습니다.</div>
+
+      {
+        loadable ?
+          <Grid ref={setTarget} container spacing={2}>
+            {[360, 350, 345, 360, 350, 360, 345].map((h, i) =>
+              <Grid item xs={12} md={4} key={i}>
+                <Skeleton animation="wave" style={{ height: h }} />
+              </Grid>
+            )}
+          </Grid>
+          :
+          <div ref={setTarget} style={{ margin: 20 }}>데이터가 없습니다.</div>
+      }
     </div >
   );
 };
